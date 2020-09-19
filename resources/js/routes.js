@@ -1,5 +1,4 @@
-import Hello from "./components/Hello";
-import Menu from "./components/Home";
+import MenuGrid from "./components/menu/MenuGrid";
 import Profile from "./components/Dashboard";
 import Register from "./components/Register.vue";
 import Login from "./components/Login.vue";
@@ -9,15 +8,7 @@ export default [
     {
         path: "/",
         name: "menu",
-        component: Menu,
-        meta: {
-            auth: undefined
-        }
-    },
-    {
-        path: "/hello",
-        name: "hello",
-        component: Hello,
+        component: MenuGrid,
         meta: {
             auth: undefined
         }
