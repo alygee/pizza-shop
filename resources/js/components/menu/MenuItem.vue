@@ -3,7 +3,7 @@
         <div class="max-w-sm rounded overflow-hidden shadow-lg">
             <img
                 class="object-scale-down w-full"
-                :src="'/storage' + product.image"
+                :src="product.image"
                 alt="Sunset in the mountains"
             />
             <div class="px-6 py-4">

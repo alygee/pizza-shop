@@ -22009,10 +22009,7 @@ var render = function() {
     _c("div", { staticClass: "max-w-sm rounded overflow-hidden shadow-lg" }, [
       _c("img", {
         staticClass: "object-scale-down w-full",
-        attrs: {
-          src: "/storage" + _vm.product.image,
-          alt: "Sunset in the mountains"
-        }
+        attrs: { src: _vm.product.image, alt: "Sunset in the mountains" }
       }),
       _vm._v(" "),
       _c("div", { staticClass: "px-6 py-4" }, [
