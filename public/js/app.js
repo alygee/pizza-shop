@@ -3472,6 +3472,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Cart",
@@ -3481,6 +3504,11 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     items: Array
   },
+  data: function data() {
+    return {
+      currency: "eur"
+    };
+  },
   mounted: function mounted() {
     this.$store.dispatch("cart");
   },
@@ -3488,22 +3516,35 @@ __webpack_require__.r(__webpack_exports__);
     cartQty: function cartQty() {
       return this.$store.getters.cartQty;
     },
+    sign: function sign() {
+      return this.$store.getters.currencySign;
+    },
+    amount: function amount() {
+      return this.$store.getters.amount * this.$store.getters.currencyMultiplier;
+    },
     content: function content() {
+      var _this = this;
+
       if (!this.cartQty) {
         return "\n                  <div class=\"px-6 bg-white border shadow rounded-lg\">\n                    <div class=\"font-bold py-6 bg-white\">Oops, it\u2019s empty here!</div>\n                  </div>";
       }
 
       var start = "<div class=\"px-6 bg-white border shadow rounded-lg\">\n              <table class=\"table-auto\">\n              <thead>\n                <tr>\n                  <th class=\"px-4 py-2\">Name</th>\n                  <th class=\"px-4 py-2\">Qty</th>\n                  <th class=\"px-4 py-2\">Price</th>\n                </tr>\n              </thead>\n              <tbody>\n            ";
       var end = "</tbody></table>";
-      var amount = "\n              <div class=\"flex justify-between w-full p-4 font-bold\">\n                <p class=\"py-4\">Amount: $".concat(this.$store.getters.amount, "</p>\n                <a href=\"/checkout\" class=\"py-4 text-orange-500 hover:text-orange-600\">\n                  Checkout\n                </a>\n              </div>\n            ");
+      var amount = "\n              <div class=\"flex justify-between w-full p-4 font-bold\">\n                <p class=\"py-4\">Amount: ".concat(this.sign, " ").concat(this.amount, "</p>\n                <a href=\"/checkout\" class=\"py-4 text-orange-500 hover:text-orange-600\">\n                  Checkout\n                </a>\n              </div>\n            ");
       var items = "";
 
       _.forEach(this.$store.state.cart, function (item) {
         if (!item) return;
-        items += "<tr>\n                <td class=\"border px-4 py-2\">".concat(item.name, "</td>\n                <td class=\"border px-4 py-2\">").concat(item.quantity, "</td>\n                <td class=\"border px-4 py-2\">").concat(item.price * item.quantity, "</td>\n              </tr>");
+        items += "<tr>\n                <td class=\"border px-4 py-2\">".concat(item.name, "</td>\n                <td class=\"border px-4 py-2\">").concat(item.quantity, "</td>\n                <td class=\"border px-4 py-2\">").concat(item.price * item.quantity * _this.$store.getters.currencyMultiplier, "</td>\n              </tr>");
       });
 
       return start + items + end + amount;
+    }
+  },
+  methods: {
+    changeCurrency: function changeCurrency() {
+      this.$store.commit("changeCurrency", this.currency);
     }
   }
 });
@@ -3616,6 +3657,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CheckoutCart",
   computed: {
@@ -3623,7 +3668,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.$store.state.cart;
     },
     amount: function amount() {
-      return this.$store.getters.amount;
+      return this.$store.getters.amount * this.$store.getters.currencyMultiplier;
+    },
+    sign: function sign() {
+      return this.$store.getters.currencySign;
     }
   },
   methods: {
@@ -3889,10 +3937,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     total: function total() {
-      return this.$store.getters.amount + 5;
+      return this.$store.getters.amount * this.$store.getters.currencyMultiplier + this.shippingCost;
     },
     disabled: function disabled() {
       return !this.$store.getters.cartQty;
+    },
+    shippingCost: function shippingCost() {
+      return 5 * this.$store.getters.currencyMultiplier;
+    },
+    sign: function sign() {
+      return this.$store.getters.currencySign;
     }
   },
   methods: {
@@ -4005,6 +4059,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -31005,6 +31060,75 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("div", { staticClass: "inline-block relative w-32 mr-4" }, [
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.currency,
+              expression: "currency"
+            }
+          ],
+          staticClass:
+            "block appearance-none w-full bg-white border border-orange-500 hover:border-orange-600 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline",
+          on: {
+            change: [
+              function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.currency = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              },
+              _vm.changeCurrency
+            ]
+          }
+        },
+        [
+          _c("option", { attrs: { value: "usd" } }, [_vm._v("$ USD ")]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "eur" } }, [_vm._v("€ EUR")])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-orange-600"
+        },
+        [
+          _c(
+            "svg",
+            {
+              staticClass: "fill-current h-4 w-4",
+              attrs: {
+                xmlns: "http://www.w3.org/2000/svg",
+                viewBox: "0 0 20 20"
+              }
+            },
+            [
+              _c("path", {
+                attrs: {
+                  d:
+                    "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                }
+              })
+            ]
+          )
+        ]
+      )
+    ]),
+    _vm._v(" "),
     _c(
       "button",
       {
@@ -31159,7 +31283,7 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
-                    _c("span", { staticClass: "px-4" }, [
+                    _c("span", { staticClass: "px-2" }, [
                       _vm._v(_vm._s(item.quantity))
                     ]),
                     _vm._v(" "),
@@ -31204,8 +31328,13 @@ var render = function() {
               _c("td", { staticClass: "text-lg font-semibold px-4" }, [
                 _vm._v(
                   "\n                        " +
-                    _vm._s(item.price * item.quantity) +
-                    "$\n                    "
+                    _vm._s(_vm.sign) +
+                    _vm._s(
+                      item.price *
+                        item.quantity *
+                        _vm.$store.getters.currencyMultiplier
+                    ) +
+                    "\n                    "
                 )
               ])
             ])
@@ -31215,7 +31344,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("h2", { staticClass: "mt-6 font-bold" }, [
-        _vm._v("Amount: $" + _vm._s(_vm.amount))
+        _vm._v("Amount: " + _vm._s(_vm.sign) + " " + _vm._s(_vm.amount))
       ])
     ])
   ])
@@ -31653,15 +31782,26 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "rounded shadow-lg mb-6" }, [
         _c("div", { staticClass: "p-6 bg-white shadow rounded-lg my-6" }, [
-          _vm._m(0),
+          _c("p", { staticClass: "py-4" }, [
+            _c("span", { staticClass: "font-semibold" }, [
+              _vm._v("Shipping cost:")
+            ]),
+            _vm._v("\n                " + _vm._s(_vm.sign) + " 5\n            ")
+          ]),
           _vm._v(" "),
-          _vm._m(1),
+          _vm._m(0),
           _vm._v(" "),
           _c("p", { staticClass: "py-4" }, [
             _c("span", { staticClass: "font-semibold" }, [
               _vm._v("Total price:")
             ]),
-            _vm._v("\n                $" + _vm._s(_vm.total) + "\n            ")
+            _vm._v(
+              "\n                " +
+                _vm._s(_vm.sign) +
+                " " +
+                _vm._s(_vm.total) +
+                "\n            "
+            )
           ]),
           _vm._v(" "),
           _c(
@@ -31680,15 +31820,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "py-4" }, [
-      _c("span", { staticClass: "font-semibold" }, [_vm._v("Shipping cost:")]),
-      _vm._v("\n                $5\n            ")
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -31801,8 +31932,12 @@ var render = function() {
           _c("div", { staticClass: "text-xl text-center py-2 m-2 font-bold" }, [
             _vm._v(
               "\n                " +
-                _vm._s(_vm.product.price) +
-                " $\n            "
+                _vm._s(_vm.$store.getters.currencySign) +
+                "\n                " +
+                _vm._s(
+                  _vm.product.price * _vm.$store.getters.currencyMultiplier
+                ) +
+                "\n            "
             )
           ]),
           _vm._v(" "),
@@ -50351,7 +50486,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
-    cart: []
+    cart: [],
+    currency: ""
   },
   getters: {
     cartQty: function cartQty(state) {
@@ -50363,6 +50499,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return _.reduce(state.cart, function (sum, n) {
         return n && n.quantity ? sum + n.quantity * n.price : sum;
       }, 0);
+    },
+    currencySign: function currencySign(state) {
+      return state.currency === "usd" ? "$" : "€";
+    },
+    currencyMultiplier: function currencyMultiplier(state) {
+      return state.currency === "usd" ? 1 : 0.84;
     }
   },
   mutations: {
@@ -50382,6 +50524,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (!payload.quantity) {
         this._vm.$delete(state.cart, payload.id);
       }
+    },
+    changeCurrency: function changeCurrency(state, payload) {
+      state.currency = payload;
     }
   },
   actions: {

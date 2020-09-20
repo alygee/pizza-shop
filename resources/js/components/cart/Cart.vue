@@ -1,5 +1,28 @@
 <template>
     <div>
+        <div class="inline-block relative w-32 mr-4">
+            <select
+                class="block appearance-none w-full bg-white border border-orange-500 hover:border-orange-600 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                v-model="currency"
+                @change="changeCurrency"
+            >
+                <option value="usd">$ USD </option>
+                <option value="eur">€ EUR</option>
+            </select>
+            <div
+                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-orange-600"
+            >
+                <svg
+                    class="fill-current h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                >
+                    <path
+                        d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                    />
+                </svg>
+            </div>
+        </div>
         <button
             v-tooltip="{
                 content: content,
@@ -25,12 +48,26 @@ export default {
     props: {
         items: Array
     },
+    data() {
+        return {
+            currency: "eur"
+        };
+    },
     mounted() {
         this.$store.dispatch("cart");
     },
     computed: {
         cartQty() {
             return this.$store.getters.cartQty;
+        },
+        sign() {
+            return this.$store.getters.currencySign;
+        },
+        amount() {
+            return (
+                this.$store.getters.amount *
+                this.$store.getters.currencyMultiplier
+            );
         },
         content() {
             if (!this.cartQty) {
@@ -53,7 +90,7 @@ export default {
             const end = `</tbody></table>`;
             const amount = `
               <div class="flex justify-between w-full p-4 font-bold">
-                <p class="py-4">Amount: $${this.$store.getters.amount}</p>
+                <p class="py-4">Amount: ${this.sign} ${this.amount}</p>
                 <a href="/checkout" class="py-4 text-orange-500 hover:text-orange-600">
                   Checkout
                 </a>
@@ -65,10 +102,15 @@ export default {
                 items += `<tr>
                 <td class="border px-4 py-2">${item.name}</td>
                 <td class="border px-4 py-2">${item.quantity}</td>
-                <td class="border px-4 py-2">${item.price * item.quantity}</td>
+                <td class="border px-4 py-2">${item.price * item.quantity * this.$store.getters.currencyMultiplier}</td>
               </tr>`;
             });
             return start + items + end + amount;
+        }
+    },
+    methods: {
+        changeCurrency() {
+            this.$store.commit("changeCurrency", this.currency);
         }
     }
 };

@@ -16,7 +16,8 @@
         <div class="px-6 py-4">
             <div class="flex justify-between items-center">
                 <div class="text-xl text-center py-2 m-2 font-bold">
-                    {{ product.price }} $
+                    {{ $store.getters.currencySign }}
+                    {{ product.price * $store.getters.currencyMultiplier }}
                 </div>
                 <div class="text-center py-2 m-2">
                     <button

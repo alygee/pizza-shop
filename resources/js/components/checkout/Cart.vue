@@ -40,7 +40,7 @@
                                         ></path>
                                     </svg>
                                 </button>
-                                <span class="px-4">{{ item.quantity }}</span>
+                                <span class="px-2">{{ item.quantity }}</span>
                                 <button @click="increase(item, id)">
                                     <svg
                                         class="w-6 h-6"
@@ -60,12 +60,16 @@
                             </div>
                         </td>
                         <td class="text-lg font-semibold px-4">
-                            {{ item.price * item.quantity }}$
+                            {{ sign }}{{
+                                item.price *
+                                    item.quantity *
+                                    $store.getters.currencyMultiplier
+                            }}
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <h2 class="mt-6 font-bold">Amount: ${{ amount }}</h2>
+            <h2 class="mt-6 font-bold">Amount: {{ sign }} {{ amount }}</h2>
         </div>
     </div>
 </template>
@@ -78,7 +82,13 @@ export default {
             return this.$store.state.cart;
         },
         amount() {
-            return this.$store.getters.amount;
+            return (
+                this.$store.getters.amount *
+                this.$store.getters.currencyMultiplier
+            );
+        },
+        sign() {
+            return this.$store.getters.currencySign;
         }
     },
     methods: {

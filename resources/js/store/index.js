@@ -1,6 +1,7 @@
 export default {
     state: {
-        cart: []
+        cart: [],
+        currency: ""
     },
     getters: {
         cartQty(state) {
@@ -20,6 +21,12 @@ export default {
                 },
                 0
             );
+        },
+        currencySign(state) {
+            return state.currency === "usd" ? "$" : "€";
+        },
+        currencyMultiplier(state) {
+            return state.currency === "usd" ? 1 : 0.84;
         }
     },
     mutations: {
@@ -38,6 +45,9 @@ export default {
             if (!payload.quantity) {
                 this._vm.$delete(state.cart, payload.id);
             }
+        },
+        changeCurrency(state, payload) {
+            state.currency = payload;
         }
     },
     actions: {

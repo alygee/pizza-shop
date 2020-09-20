@@ -145,7 +145,7 @@
             <div class="p-6 bg-white shadow rounded-lg my-6">
                 <p class="py-4">
                     <span class="font-semibold">Shipping cost:</span>
-                    $5
+                    {{ sign }} 5
                 </p>
                 <p class="py-4">
                     <span class="font-semibold">Payment method:</span>
@@ -153,12 +153,12 @@
                 </p>
                 <p class="py-4">
                     <span class="font-semibold">Total price:</span>
-                    ${{ total }}
+                    {{ sign }} {{ total }}
                 </p>
                 <button
                     type="submit"
                     class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-6 rounded my-4"
-                    :class="[disabled ? disabledClass  : '']"
+                    :class="[disabled ? disabledClass : '']"
                     :disabled="disabled"
                 >
                     Create order
@@ -185,10 +185,20 @@ export default {
     },
     computed: {
         total() {
-            return this.$store.getters.amount + 5;
+            return (
+                this.$store.getters.amount *
+                    this.$store.getters.currencyMultiplier +
+                this.shippingCost
+            );
         },
         disabled() {
             return !this.$store.getters.cartQty;
+        },
+        shippingCost() {
+            return 5 * this.$store.getters.currencyMultiplier;
+        },
+        sign() {
+            return this.$store.getters.currencySign;
         }
     },
     methods: {
