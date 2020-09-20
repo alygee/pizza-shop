@@ -33,3 +33,4 @@ Route::group(['middleware' => 'auth:api'], function(){
 });
 
 Route::resource('products', ProductController::class)->only(['index', 'store', 'update', 'show']);
+

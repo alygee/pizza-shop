@@ -12,20 +12,20 @@ const config = {
     rolesKey: "role",
     registerData: { url: "auth/register", method: "POST", redirect: "/login" },
     loginData: {
-        url: "auth/login",
+        url: "api/auth/login",
         method: "POST",
         redirect: "",
         fetchUser: true
     },
     logoutData: {
-        url: "auth/logout",
+        url: "api/auth/logout",
         method: "POST",
         redirect: "/",
         makeRequest: true
     },
-    fetchData: { url: "auth/user", method: "GET", enabled: true },
+    fetchData: { url: "api/auth/user", method: "GET", enabled: true },
     refreshData: {
-        url: "auth/refresh",
+        url: "api/auth/refresh",
         method: "GET",
         enabled: true,
         interval: 30

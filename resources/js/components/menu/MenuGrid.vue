@@ -1,26 +1,21 @@
 <template>
-    <div>
-        <section
-            class="flex flex-col break-words bg-white sm:border-1 sm:rounded-md sm:shadow-sm sm:shadow-lg"
+    <section
+        class="flex flex-col break-words bg-white sm:border-1 sm:rounded-md sm:shadow-sm sm:shadow-lg mb-6"
+    >
+        <header
+            class="font-semibold bg-gray-200 text-gray-700 py-5 px-6 sm:py-6 sm:px-8 sm:rounded-t-md"
         >
-            <header
-                class="font-semibold bg-gray-200 text-gray-700 py-5 px-6 sm:py-6 sm:px-8 sm:rounded-t-md"
-            >
-                Menu
-            </header>
+            Menu
+        </header>
 
-            <div class="w-full p-6">
-                <div class="grid grid-cols-4 gap-4">
-                    <menu-item
-                        v-for="product in products"
-                        :product="product"
-                        :key="product.id"
-                        @show-modal="displayModal"
-                    ></menu-item>
-                </div>
-            </div>
-        </section>
-    </div>
+        <div class="w-full p-6 flex flex-wrap">
+            <menu-item
+                v-for="product in products"
+                :product="product"
+                :key="product.id"
+            ></menu-item>
+        </div>
+    </section>
 </template>
 
 <script>
@@ -32,6 +27,7 @@ export default {
     data() {
         return {
             products: {},
+            cart: {},
             showModal: false,
             selectedProduct: {}
         };
@@ -39,9 +35,10 @@ export default {
     created() {
         this.fetchData();
     },
+    mounted() {},
     methods: {
         fetchData() {
-            this.axios.get("/products").then(({ data }) => {
+            this.axios.get("/api/products").then(({ data }) => {
                 this.products = data;
             });
         }

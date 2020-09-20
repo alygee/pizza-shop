@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/{any?}', function (){
     return view('spa');
-})->where('any', '^(?!(api|storage)\/)[\/\w\.-]*');
+})->where('any', '^(?!(api|storage|cart)\/)[\/\w\.-]*');
+
+Route::get('cart/list', [CartController::class, 'list']);
+Route::post('cart/{id}', [CartController::class, 'add']);
+Route::put('cart/update', [CartController::class, 'update']);
+Route::delete('cart/remove', [CartController::class, 'remove']);

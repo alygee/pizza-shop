@@ -3,12 +3,21 @@ import Profile from "./components/Dashboard";
 import Register from "./components/Register.vue";
 import Login from "./components/Login.vue";
 import AdminDashboard from "./components/admin/Dashboard.vue";
+import Checkout from "./components/checkout/Checkout.vue";
 
 export default [
     {
         path: "/",
         name: "menu",
         component: MenuGrid,
+        meta: {
+            auth: undefined
+        }
+    },
+    {
+        path: "/checkout",
+        name: "checkout",
+        component: Checkout,
         meta: {
             auth: undefined
         }
