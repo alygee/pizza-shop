@@ -11,8 +11,8 @@
         <div class="w-full p-6 flex flex-wrap">
             <div class="px-4 overflow-hidden w-full xs:w-full md:w-1/2">
                 <div class="rounded shadow-lg mb-6">
-                    <h2 class="mb-6 font-semibold">Info</h2>
                     <div class="p-6 bg-white shadow rounded-lg">
+                        <h2 class="mb-6 font-semibold">Info</h2>
                         <p class="p-6 flex justify-between border-t border-b">
                             <span class="font-semibold">Order </span
                             ><span>#{{ order.id }}</span>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
             </div>
-            <div class="px-4 my-4 overflow-hidden w-full xs:w-full md:w-1/2">
+            <div class="px-4 overflow-hidden w-full xs:w-full md:w-1/2">
                 <div class="rounded shadow-lg mb-6">
                     <div class="p-6 bg-white shadow rounded-lg">
                         <h2 class="mb-6 font-semibold">Items</h2>

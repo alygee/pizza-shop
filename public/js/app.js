@@ -31084,9 +31084,11 @@ var render = function() {
           { staticClass: "px-4 overflow-hidden w-full xs:w-full md:w-1/2" },
           [
             _c("div", { staticClass: "rounded shadow-lg mb-6" }, [
-              _c("h2", { staticClass: "mb-6 font-semibold" }, [_vm._v("Info")]),
-              _vm._v(" "),
               _c("div", { staticClass: "p-6 bg-white shadow rounded-lg" }, [
+                _c("h2", { staticClass: "mb-6 font-semibold" }, [
+                  _vm._v("Info")
+                ]),
+                _vm._v(" "),
                 _c(
                   "p",
                   { staticClass: "p-6 flex justify-between border-t border-b" },
@@ -31181,9 +31183,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          {
-            staticClass: "px-4 my-4 overflow-hidden w-full xs:w-full md:w-1/2"
-          },
+          { staticClass: "px-4 overflow-hidden w-full xs:w-full md:w-1/2" },
           [
             _c("div", { staticClass: "rounded shadow-lg mb-6" }, [
               _c("div", { staticClass: "p-6 bg-white shadow rounded-lg" }, [
