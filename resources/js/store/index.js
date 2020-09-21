@@ -1,7 +1,7 @@
 export default {
     state: {
         cart: [],
-        currency: ""
+        currency: "usd"
     },
     getters: {
         cartQty(state) {
@@ -27,6 +27,9 @@ export default {
         },
         currencyMultiplier(state) {
             return state.currency === "usd" ? 1 : 0.84;
+        },
+        cartItems(state) {
+          return _.omit(state.cart, 'currency');
         }
     },
     mutations: {
@@ -47,7 +50,7 @@ export default {
             }
         },
         changeCurrency(state, payload) {
-            state.currency = payload;
+            state.currency = payload.currency;
         }
     },
     actions: {
@@ -65,6 +68,11 @@ export default {
         updateCartItem({ commit }, payload) {
             axios.put("/cart/update", payload).then(({ data }) => {
                 commit("updateCartItem", { ...data, id: payload.id });
+            });
+        },
+        updateCurrency({ commit }, payload) {
+            axios.put("/cart/currency", payload).then(({ data }) => {
+                commit("changeCurrency", data);
             });
         }
     }

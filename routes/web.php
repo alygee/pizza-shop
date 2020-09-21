@@ -21,4 +21,4 @@ Route::get('/{any?}', function (){
 Route::get('cart/list', [CartController::class, 'list']);
 Route::post('cart/{id}', [CartController::class, 'add']);
 Route::put('cart/update', [CartController::class, 'update']);
-Route::delete('cart/remove', [CartController::class, 'remove']);
+Route::put('cart/currency', [CartController::class, 'currency']);

@@ -153,7 +153,7 @@
                 </p>
                 <p class="py-4">
                     <span class="font-semibold">Total price:</span>
-                    {{ sign }} {{ total }}
+                    {{ sign }} {{ total() }}
                 </p>
                 <button
                     type="submit"
@@ -184,24 +184,25 @@ export default {
         };
     },
     computed: {
-        total() {
-            return (
-                this.$store.getters.amount *
-                    this.$store.getters.currencyMultiplier +
-                this.shippingCost
-            );
-        },
         disabled() {
             return !this.$store.getters.cartQty;
-        },
-        shippingCost() {
-            return 5 * this.$store.getters.currencyMultiplier;
         },
         sign() {
             return this.$store.getters.currencySign;
         }
     },
     methods: {
+        total() {
+            return Number(
+                (this.$store.getters.amount + 5) *
+                    this.$store.getters.currencyMultiplier
+            ).toFixed(2);
+        },
+        shippingCost() {
+            return Number(5 * this.$store.getters.currencyMultiplier).toFixed(
+                2
+            );
+        },
         checkForm(e) {
             this.errors = {};
 

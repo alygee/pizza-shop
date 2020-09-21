@@ -3494,7 +3494,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Cart",
@@ -3504,23 +3503,29 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     items: Array
   },
-  data: function data() {
-    return {
-      currency: "eur"
-    };
-  },
   mounted: function mounted() {
     this.$store.dispatch("cart");
+    this.$store.dispatch("updateCurrency");
   },
   computed: {
     cartQty: function cartQty() {
       return this.$store.getters.cartQty;
     },
+    currency: {
+      get: function get() {
+        return this.$store.state.currency;
+      },
+      set: function set(currency) {
+        this.$store.dispatch("updateCurrency", {
+          currency: currency
+        });
+      }
+    },
     sign: function sign() {
       return this.$store.getters.currencySign;
     },
     amount: function amount() {
-      return this.$store.getters.amount * this.$store.getters.currencyMultiplier;
+      return Number(this.$store.getters.amount * this.$store.getters.currencyMultiplier).toFixed(2);
     },
     content: function content() {
       var _this = this;
@@ -3534,17 +3539,17 @@ __webpack_require__.r(__webpack_exports__);
       var amount = "\n              <div class=\"flex justify-between w-full p-4 font-bold\">\n                <p class=\"py-4\">Amount: ".concat(this.sign, " ").concat(this.amount, "</p>\n                <a href=\"/checkout\" class=\"py-4 text-orange-500 hover:text-orange-600\">\n                  Checkout\n                </a>\n              </div>\n            ");
       var items = "";
 
-      _.forEach(this.$store.state.cart, function (item) {
+      _.forEach(this.$store.getters.cartItems, function (item) {
         if (!item) return;
-        items += "<tr>\n                <td class=\"border px-4 py-2\">".concat(item.name, "</td>\n                <td class=\"border px-4 py-2\">").concat(item.quantity, "</td>\n                <td class=\"border px-4 py-2\">").concat(item.price * item.quantity * _this.$store.getters.currencyMultiplier, "</td>\n              </tr>");
+        items += "<tr>\n                <td class=\"border px-4 py-2\">".concat(item.name, "</td>\n                <td class=\"border px-4 py-2\">").concat(item.quantity, "</td>\n                <td class=\"border px-4 py-2\">").concat(_this.price(item), "</td>\n              </tr>");
       });
 
       return start + items + end + amount;
     }
   },
   methods: {
-    changeCurrency: function changeCurrency() {
-      this.$store.commit("changeCurrency", this.currency);
+    price: function price(item) {
+      return Number(item.price * item.quantity * this.$store.getters.currencyMultiplier).toFixed(2);
     }
   }
 });
@@ -3657,18 +3662,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CheckoutCart",
   computed: {
     cart: function cart() {
-      return this.$store.state.cart;
+      return this.$store.getters.cartItems;
     },
     amount: function amount() {
-      return this.$store.getters.amount * this.$store.getters.currencyMultiplier;
+      return Number(this.$store.getters.amount * this.$store.getters.currencyMultiplier).toFixed(2);
     },
     sign: function sign() {
       return this.$store.getters.currencySign;
@@ -3686,6 +3687,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$store.dispatch("updateCartItem", _objectSpread(_objectSpread({}, item), {}, {
         id: id
       }));
+    },
+    price: function price(item) {
+      return Number(item.price * item.quantity * this.$store.getters.currencyMultiplier).toFixed(2);
     }
   }
 });
@@ -3936,20 +3940,20 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {
-    total: function total() {
-      return this.$store.getters.amount * this.$store.getters.currencyMultiplier + this.shippingCost;
-    },
     disabled: function disabled() {
       return !this.$store.getters.cartQty;
-    },
-    shippingCost: function shippingCost() {
-      return 5 * this.$store.getters.currencyMultiplier;
     },
     sign: function sign() {
       return this.$store.getters.currencySign;
     }
   },
   methods: {
+    total: function total() {
+      return Number((this.$store.getters.amount + 5) * this.$store.getters.currencyMultiplier).toFixed(2);
+    },
+    shippingCost: function shippingCost() {
+      return Number(5 * this.$store.getters.currencyMultiplier).toFixed(2);
+    },
     checkForm: function checkForm(e) {
       this.errors = {};
 
@@ -31075,22 +31079,19 @@ var render = function() {
           staticClass:
             "block appearance-none w-full bg-white border border-orange-500 hover:border-orange-600 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline",
           on: {
-            change: [
-              function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.currency = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
-              },
-              _vm.changeCurrency
-            ]
+            change: function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.currency = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            }
           }
         },
         [
@@ -31329,11 +31330,7 @@ var render = function() {
                 _vm._v(
                   "\n                        " +
                     _vm._s(_vm.sign) +
-                    _vm._s(
-                      item.price *
-                        item.quantity *
-                        _vm.$store.getters.currencyMultiplier
-                    ) +
+                    _vm._s(_vm.price(item)) +
                     "\n                    "
                 )
               ])
@@ -31799,7 +31796,7 @@ var render = function() {
               "\n                " +
                 _vm._s(_vm.sign) +
                 " " +
-                _vm._s(_vm.total) +
+                _vm._s(_vm.total()) +
                 "\n            "
             )
           ]),
@@ -50487,7 +50484,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
     cart: [],
-    currency: ""
+    currency: "usd"
   },
   getters: {
     cartQty: function cartQty(state) {
@@ -50505,6 +50502,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     currencyMultiplier: function currencyMultiplier(state) {
       return state.currency === "usd" ? 1 : 0.84;
+    },
+    cartItems: function cartItems(state) {
+      return _.omit(state.cart, 'currency');
     }
   },
   mutations: {
@@ -50526,7 +50526,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     changeCurrency: function changeCurrency(state, payload) {
-      state.currency = payload;
+      state.currency = payload.currency;
     }
   },
   actions: {
@@ -50557,6 +50557,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         commit("updateCartItem", _objectSpread(_objectSpread({}, data), {}, {
           id: payload.id
         }));
+      });
+    },
+    updateCurrency: function updateCurrency(_ref7, payload) {
+      var commit = _ref7.commit;
+      axios.put("/cart/currency", payload).then(function (_ref8) {
+        var data = _ref8.data;
+        commit("changeCurrency", data);
       });
     }
   }

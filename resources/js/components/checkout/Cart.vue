@@ -60,11 +60,7 @@
                             </div>
                         </td>
                         <td class="text-lg font-semibold px-4">
-                            {{ sign }}{{
-                                item.price *
-                                    item.quantity *
-                                    $store.getters.currencyMultiplier
-                            }}
+                            {{ sign }}{{ price(item) }}
                         </td>
                     </tr>
                 </tbody>
@@ -79,13 +75,13 @@ export default {
     name: "CheckoutCart",
     computed: {
         cart() {
-            return this.$store.state.cart;
+            return this.$store.getters.cartItems;
         },
         amount() {
-            return (
+            return Number(
                 this.$store.getters.amount *
-                this.$store.getters.currencyMultiplier
-            );
+                    this.$store.getters.currencyMultiplier
+            ).toFixed(2);
         },
         sign() {
             return this.$store.getters.currencySign;
@@ -99,6 +95,13 @@ export default {
         decrease(item, id) {
             item.quantity--;
             this.$store.dispatch("updateCartItem", { ...item, id });
+        },
+        price(item) {
+            return Number(
+                item.price *
+                    item.quantity *
+                    this.$store.getters.currencyMultiplier
+            ).toFixed(2);
         }
     }
 };

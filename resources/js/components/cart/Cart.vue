@@ -4,7 +4,6 @@
             <select
                 class="block appearance-none w-full bg-white border border-orange-500 hover:border-orange-600 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
                 v-model="currency"
-                @change="changeCurrency"
             >
                 <option value="usd">$ USD </option>
                 <option value="eur">€ EUR</option>
@@ -48,26 +47,30 @@ export default {
     props: {
         items: Array
     },
-    data() {
-        return {
-            currency: "eur"
-        };
-    },
     mounted() {
         this.$store.dispatch("cart");
+        this.$store.dispatch("updateCurrency");
     },
     computed: {
         cartQty() {
             return this.$store.getters.cartQty;
         },
+        currency: {
+            get() {
+                return this.$store.state.currency;
+            },
+            set(currency) {
+                this.$store.dispatch("updateCurrency", { currency });
+            }
+        },
         sign() {
             return this.$store.getters.currencySign;
         },
         amount() {
-            return (
+            return Number(
                 this.$store.getters.amount *
-                this.$store.getters.currencyMultiplier
-            );
+                    this.$store.getters.currencyMultiplier
+            ).toFixed(2);
         },
         content() {
             if (!this.cartQty) {
@@ -97,20 +100,24 @@ export default {
               </div>
             `;
             let items = "";
-            _.forEach(this.$store.state.cart, item => {
+            _.forEach(this.$store.getters.cartItems, item => {
                 if (!item) return;
                 items += `<tr>
                 <td class="border px-4 py-2">${item.name}</td>
                 <td class="border px-4 py-2">${item.quantity}</td>
-                <td class="border px-4 py-2">${item.price * item.quantity * this.$store.getters.currencyMultiplier}</td>
+                <td class="border px-4 py-2">${this.price(item)}</td>
               </tr>`;
             });
             return start + items + end + amount;
         }
     },
     methods: {
-        changeCurrency() {
-            this.$store.commit("changeCurrency", this.currency);
+        price(item) {
+            return Number(
+                item.price *
+                    item.quantity *
+                    this.$store.getters.currencyMultiplier
+            ).toFixed(2);
         }
     }
 };

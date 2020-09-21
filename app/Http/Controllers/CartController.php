@@ -57,6 +57,24 @@ class CartController extends Controller
         }
     }
 
+    public function currency(Request $request)
+    {
+        $cart = $request->session()->get('cart');
+        if ($request->currency) {
+            $cart["currency"] = $request->currency;
+            $request->session()->put('cart', $cart);
+            return response()->json(['currency' => $cart['currency']]);
+        } else {
+            if (!isset($cart['currency'])) {
+                $cart["currency"] = $request->currency;
+                $request->session()->put('cart', $cart);
+                return response()->json(['currency' => 'usd']);
+            } else {
+                return response()->json(['currency' => $cart['currency']]);
+            }
+        }
+    }
+
     public function remove(Request $request)
     {
         if($request->id) {
