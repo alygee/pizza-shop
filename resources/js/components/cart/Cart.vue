@@ -22,7 +22,8 @@
                 </svg>
             </div>
         </div>
-        <button
+        <a
+            href="/checkout"
             v-tooltip="{
                 content: content,
                 placement: 'bottom-start',
@@ -34,7 +35,7 @@
             class="bg-orange-500 hover:bg-orange-600 text-white font-semibold hover:text-white py-2 px-4 rounded"
         >
             My order <span class="px-2">|</span> {{ cartQty }}
-        </button>
+        </a>
     </div>
 </template>
 

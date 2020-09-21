@@ -17,7 +17,7 @@
             <div class="flex justify-between items-center">
                 <div class="text-xl text-center py-2 m-2 font-bold">
                     {{ $store.getters.currencySign }}
-                    {{ product.price * $store.getters.currencyMultiplier }}
+                    {{ price() }}
                 </div>
                 <div class="text-center py-2 m-2">
                     <button
@@ -41,6 +41,11 @@ export default {
     methods: {
         add() {
             this.$store.dispatch("addToCart", this.product);
+        },
+        price() {
+            return Number(
+                this.product.price * this.$store.getters.currencyMultiplier
+            ).toFixed(2);
         }
     }
 };

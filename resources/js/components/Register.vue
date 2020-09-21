@@ -146,7 +146,7 @@ export default {
                     app.error = true;
                     app.errors = resp.response.data.errors;
                 },
-                redirect: null
+                redirect: '/login'
             });
         }
     }

@@ -12,7 +12,7 @@
             <div class="w-full">
                 <div class="text-gray-700">
                     <div class="min-h-full md:flex">
-                        <div class="flex-none w-1/6 md:max-w-xs border-r p-6">
+                        <div class="flex-none w-full md:max-w-xs border-r p-6">
                             <ul
                                 class="md:flex-col md:min-w-full flex flex-col list-none"
                             >

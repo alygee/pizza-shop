@@ -10,7 +10,7 @@ const config = {
     tokenDefaultName: "laravel-vue-spa",
     tokenStore: ["localStorage"],
     rolesKey: "role",
-    registerData: { url: "auth/register", method: "POST", redirect: "/login" },
+    registerData: { url: "api/auth/register", method: "POST", redirect: "/login" },
     loginData: {
         url: "api/auth/login",
         method: "POST",
