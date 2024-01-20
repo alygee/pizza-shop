@@ -6,10 +6,9 @@
                     <ul class="main-menu">
                         <li class="text-lg font-semibold no-underline mr-6">
                             <router-link :to="{ name: 'menu' }"
-                                ><img
-                                    src="/images/pizza.png"
-                                    class="w-10 -my-4"
-                            /></router-link>
+                                >
+                                <img src="/images/logo.svg" />
+                            </router-link>
                         </li>
                         <li class="text-lg font-semibold no-underline mr-6">
                             <router-link :to="{ name: 'menu' }"
@@ -81,12 +80,6 @@ export default {
 </script>
 
 <style>
-.router-link-exact-active {
-    color: #ff5a1f !important;
-}
-.router-link-exact-active:hover {
-    color: #d03801 !important;
-}
 body {
   background-color: #090909;
   color: #fff;
@@ -177,7 +170,7 @@ header nav .personal-menu li svg:hover {
   color: #ffbd19;
 }
 
-header nav ul.main-menu li a.active,
+header nav ul.main-menu li a.router-link-exact-active,
 header nav ul.main-menu li a:hover {
   color: #ffbd19;
   padding-bottom: 2px;
