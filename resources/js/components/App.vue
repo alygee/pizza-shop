@@ -4,53 +4,37 @@
             <header>
                 <nav>
                     <ul class="main-menu">
-                        <li class="text-lg font-semibold no-underline mr-6">
-                            <router-link :to="{ name: 'menu' }"
-                                >
-                                <img src="/images/logo.svg" />
-                            </router-link>
+                        <li>
+                            <a href="/">
+                                <img src="/images/logo.svg" alt="logo" />
+                            </a>
                         </li>
-                        <li class="text-lg font-semibold no-underline mr-6">
+                        <li>
                             <router-link :to="{ name: 'menu' }"
                                 >Menu</router-link
                             >
                         </li>
-                        <li
-                            v-if="$auth.check(1)"
-                            class="text-lg font-semibold no-underline mr-6"
-                        >
+                        <li v-if="$auth.check(1)">
                             <router-link :to="{ name: 'profile' }"
                                 >Profile</router-link
                             >
                         </li>
-                        <li
-                            v-if="$auth.check(2)"
-                            class="text-lg font-semibold no-underline mr-6"
-                        >
+                        <li v-if="$auth.check(2)">
                             <router-link :to="{ name: 'admin.dashboard' }"
                                 >Admin Dashboard</router-link
                             >
                         </li>
-                        <li
-                            v-if="!$auth.check()"
-                            class="text-lg font-semibold no-underline mr-6"
-                        >
+                        <li v-if="!$auth.check()">
                             <router-link :to="{ name: 'login' }"
                                 >Login</router-link
                             >
                         </li>
-                        <li
-                            v-if="!$auth.check()"
-                            class="text-lg font-semibold no-underline mr-6"
-                        >
+                        <li v-if="!$auth.check()">
                             <router-link :to="{ name: 'register' }"
                                 >Register</router-link
                             >
                         </li>
-                        <li
-                            v-if="$auth.check()"
-                            class="text-lg font-semibold no-underline mr-6"
-                        >
+                        <li v-if="$auth.check()">
                             <a href="#" @click.prevent="$auth.logout()"
                                 >Logout</a
                             >
@@ -65,9 +49,7 @@
                 </div>
             </main>
         </div>
-        <div v-if="!$auth.ready()">
-            Loading...
-        </div>
+        <div v-if="!$auth.ready()">Loading...</div>
     </div>
 </template>
 <script>
@@ -75,114 +57,74 @@ import Cart from "./cart/Cart";
 
 export default {
     name: "App",
-    components: { Cart }
+    components: { Cart },
 };
 </script>
 
 <style>
-body {
-  background-color: #090909;
-  color: #fff;
-  font-family: Montserrat;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-h1 {
-  text-align: center;
-  font-size: 24px;
-  font-weight: 700;
-}
-
-main h1 {
-  margin: 62px 0 48px;
-}
-
-h2 {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-main.terms h2 {
-  margin: 31px 0 14px;
-}
-
-h3, .h3 {
-  font-size: 16px;
-  font-weight: 600;
-}
-
-main {
-  width: 920px;
-  margin: 0 auto;
-}
 header {
-  width: 920px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    width: 920px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 header nav ul {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 header nav ul.main-menu li {
-  margin-right: 30px;
-  padding-bottom: 2px;
-  border-bottom: 1px solid transparent;
+    margin-right: 30px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
 }
 
 header nav ul.personal-menu li {
-  padding: 10px 12px;
+    padding: 10px 12px;
 }
 
 header nav ul.personal-menu {
-  margin-right: 12px;
+    margin-right: 12px;
 }
 
 header nav ul.main-menu li:last-child {
-  margin-right: 0;
+    margin-right: 0;
 }
 
 header nav ul.main-menu li a {
-  color: inherit;
-  font-size: 12px;
-  text-decoration: none;
+    color: inherit;
+    font-size: 12px;
+    text-decoration: none;
 }
 
 header nav .main-menu li a:first-child:hover {
-  padding-bottom: 2px;
-  border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
 }
 
 header nav .personal-menu li a svg {
-  color: #fff;
+    color: #fff;
 }
 
 header nav .personal-menu li svg:hover {
-  color: #ffbd19;
+    color: #ffbd19;
 }
 
 header nav ul.main-menu li a.router-link-exact-active,
 header nav ul.main-menu li a:hover {
-  color: #ffbd19;
-  padding-bottom: 2px;
-  border-bottom: 1px solid #ffbd19;
+    color: #ffbd19;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #ffbd19;
 }
 .authenticated {
-  color: #ffbd19;
-  cursor: pointer;
+    color: #ffbd19;
+    cursor: pointer;
 }
 .authenticated svg {
-  border: 1px solid #ffbd19;
-  border-radius: 100%;
-  padding: 5px 6px;
+    border: 1px solid #ffbd19;
+    border-radius: 100%;
+    padding: 5px 6px;
 }
 </style>

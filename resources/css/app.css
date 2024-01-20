@@ -1,5 +1,46 @@
-@import "tailwindcss/base";
+@font-face {
+  font-family: Montserrat;
+  src: local(Montserrat), url(../fonts/Montserrat-VariableFont_wght.ttf);
+}
 
-@import "tailwindcss/components";
+body {
+  background-color: #090909;
+  color: #fff;
+  font-family: Montserrat;
+}
 
-@import "tailwindcss/utilities";
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+h1 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+main h1 {
+  margin: 62px 0 48px;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+main.terms h2 {
+  margin: 31px 0 14px;
+}
+
+h3, .h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+main {
+  width: 920px;
+  margin: 0 auto;
+}
+
