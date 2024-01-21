@@ -81,14 +81,6 @@ header nav ul.main-menu li {
     border-bottom: 1px solid transparent;
 }
 
-header nav ul.personal-menu li {
-    padding: 10px 12px;
-}
-
-header nav ul.personal-menu {
-    margin-right: 12px;
-}
-
 header nav ul.main-menu li:last-child {
     margin-right: 0;
 }
@@ -102,14 +94,6 @@ header nav ul.main-menu li a {
 header nav .main-menu li a:first-child:hover {
     padding-bottom: 2px;
     border-bottom: 1px solid transparent;
-}
-
-header nav .personal-menu li a svg {
-    color: #fff;
-}
-
-header nav .personal-menu li svg:hover {
-    color: #ffbd19;
 }
 
 header nav ul.main-menu li a.router-link-exact-active,

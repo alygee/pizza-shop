@@ -12,7 +12,6 @@
                         autoHide: false,
                         show: false,
                     }"
-                    class="bg-orange-500 hover:bg-orange-600 text-white font-semibold hover:text-white py-2 px-4 rounded"
                 >
                     <svg
                         width="16"
@@ -29,7 +28,7 @@
                             fill="currentColor"
                         />
                     </svg>
-                    <span>{{ cartQty }}</span>
+                    <span class="cart-qty">{{ cartQty }}</span>
                 </a>
             </li>
         </ul>
@@ -118,126 +117,156 @@ export default {
 </script>
 
 <style>
+header nav ul.personal-menu li {
+    padding: 10px 12px;
+}
+header nav .personal-menu li a {
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+}
+header nav .personal-menu li a:hover span,
+header nav .personal-menu li a:hover svg {
+    color: #ffbd19;
+}
+
+header nav .personal-menu li span,
+header nav .personal-menu li svg {
+    color: #fff;
+}
+
+header nav .personal-menu li span {
+    font-size: 12px;
+    font-weight: 500;
+    position: absolute;
+    bottom: 3px;
+    left: 20px;
+}
+
+header nav ul.personal-menu {
+    margin-right: 12px;
+}
+
 header .cart::before {
-  border-left: 15px solid transparent;
-  border-bottom: 15px solid #504d5b;
-  content: "";
-  position: absolute;
-  top: -15px;
-  right: 20px;
+    border-left: 15px solid transparent;
+    border-bottom: 15px solid #504d5b;
+    content: "";
+    position: absolute;
+    top: -15px;
+    right: 20px;
 }
 
 header .cart {
-  position: absolute;
-  right: 24px;
-  width: 310px;
-  border-radius: 10px;
-  background: #504d5b;
-  top: 60px;
-  padding-bottom: 30px;
+    position: absolute;
+    right: 24px;
+    width: 310px;
+    border-radius: 10px;
+    background: #504d5b;
+    top: 60px;
+    padding-bottom: 30px;
 }
 
 header .cart .footer {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  color: #fff;
-  text-align: center;
-  font-family: Montserrat;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 150%; /* 27px */
-  padding: 10px 14px;
-  margin: 0 35px;
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    color: #fff;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%; /* 27px */
+    padding: 10px 14px;
+    margin: 0 35px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 header .cart .items {
-  margin-bottom: 8px;
-  max-height: 235px;
-  overflow-y: auto;
-  padding: 20px 35px 0;
+    margin-bottom: 8px;
+    max-height: 235px;
+    overflow-y: auto;
+    padding: 20px 35px 0;
 }
 
 header .cart .items .item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 78px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 78px;
 }
 
 header .cart .items .item img {
-  width: 78px;
+    width: 78px;
 }
 
 header .cart .items .item .product-name {
-  color: #fff;
-  font-family: Montserrat;
-  font-size: 11px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  width: 100px;
+    color: #fff;
+    font-family: Montserrat;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    width: 100px;
 }
 
 header .cart .items .item .product-price {
-  color: #fff;
-  text-align: right;
-  font-family: Montserrat;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  margin-right: 14px;
+    color: #fff;
+    text-align: right;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-right: 14px;
 }
 
 header .cart .items .item .product-remove {
-  cursor: pointer;
-  color: #ffffff4d;
+    cursor: pointer;
+    color: #ffffff4d;
 }
 
 header .cart .items .item .product-remove:hover svg {
-  color: #fff;
+    color: #fff;
 }
 
 header .cart .footer .amount {
-  text-align: right;
-  color: #ffbd19;
+    text-align: right;
+    color: #ffbd19;
 }
 
 header .cart .footer .amount .tax-label {
-  color: rgba(255, 255, 255, 0.3);
-  text-align: center;
-  font-family: Montserrat;
-  font-size: 8px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 150%; /* 12px */
+    color: rgba(255, 255, 255, 0.3);
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 8px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 12px */
 }
 
 header .cart .action {
-  text-align: center;
-  margin-top: 10px;
+    text-align: center;
+    margin-top: 10px;
 }
 
 header .cart .action .yellow-button {
-  font-family: Montserrat;
-  color: #fff;
-  text-align: center;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  text-transform: uppercase;
-  border-radius: 5px;
-  background: #ffbd19;
-  border: none;
-  cursor: pointer;
-  padding: 6px 28px;
-  background: linear-gradient(0deg, #ffbd19 0%, #ffbd19 100%), #ff8a00;
+    font-family: Montserrat;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    text-transform: uppercase;
+    border-radius: 5px;
+    background: #ffbd19;
+    border: none;
+    cursor: pointer;
+    padding: 6px 28px;
+    background: linear-gradient(0deg, #ffbd19 0%, #ffbd19 100%), #ff8a00;
 }
 
 header .cart .action .yellow-button:hover {
-  background-color: #ff8a00;
+    background-color: #ff8a00;
 }
 </style>
