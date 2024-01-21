@@ -10,38 +10,13 @@
                             </a>
                         </li>
                         <li>
-                            <router-link :to="{ name: 'menu' }"
-                                >Menu</router-link
-                            >
-                        </li>
-                        <li v-if="$auth.check(1)">
-                            <router-link :to="{ name: 'profile' }"
-                                >Profile</router-link
-                            >
-                        </li>
-                        <li v-if="$auth.check(2)">
-                            <router-link :to="{ name: 'admin.dashboard' }"
-                                >Admin Dashboard</router-link
-                            >
-                        </li>
-                        <li v-if="!$auth.check()">
-                            <router-link :to="{ name: 'login' }"
-                                >Login</router-link
-                            >
-                        </li>
-                        <li v-if="!$auth.check()">
-                            <router-link :to="{ name: 'register' }"
-                                >Register</router-link
-                            >
-                        </li>
-                        <li v-if="$auth.check()">
-                            <a href="#" @click.prevent="$auth.logout()"
-                                >Logout</a
-                            >
+                            <router-link :to="{ name: 'menu' }">
+                                Menu
+                            </router-link>
                         </li>
                     </ul>
                 </nav>
-                <cart></cart>
+                <cart />
             </header>
             <main class="sm:container sm:mx-auto sm:mt-10">
                 <div class="w-full sm:px-6">
