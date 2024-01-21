@@ -3448,7 +3448,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.$store.dispatch("cart");
-    this.$store.dispatch("updateCurrency");
   },
   computed: {
     cartQty: function cartQty() {
@@ -3457,11 +3456,6 @@ __webpack_require__.r(__webpack_exports__);
     currency: {
       get: function get() {
         return this.$store.state.currency;
-      },
-      set: function set(currency) {
-        this.$store.dispatch("updateCurrency", {
-          currency: currency
-        });
       }
     },
     sign: function sign() {
@@ -4397,48 +4391,7 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("div", {
-    staticClass: "inline-block relative w-32 mr-4"
-  }, [_c("select", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.currency,
-      expression: "currency"
-    }],
-    staticClass: "block appearance-none w-full bg-white border border-orange-500 hover:border-orange-600 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline",
-    on: {
-      change: function change($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-          return o.selected;
-        }).map(function (o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val;
-        });
-        _vm.currency = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
-      }
-    }
-  }, [_c("option", {
-    attrs: {
-      value: "usd"
-    }
-  }, [_vm._v("$ USD ")]), _vm._v(" "), _c("option", {
-    attrs: {
-      value: "eur"
-    }
-  }, [_vm._v("€ EUR")])]), _vm._v(" "), _c("div", {
-    staticClass: "pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-orange-600"
-  }, [_c("svg", {
-    staticClass: "fill-current h-4 w-4",
-    attrs: {
-      xmlns: "http://www.w3.org/2000/svg",
-      viewBox: "0 0 20 20"
-    }
-  }, [_c("path", {
-    attrs: {
-      d: "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-    }
-  })])])]), _vm._v(" "), _c("a", {
+  return _c("div", [_c("a", {
     directives: [{
       name: "tooltip",
       rawName: "v-tooltip",
@@ -51392,9 +51345,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         this._vm.$delete(state.cart, payload.id);
       }
     },
-    changeCurrency: function changeCurrency(state, payload) {
-      state.currency = payload.currency;
-    },
     setOrders: function setOrders(state, payload) {
       state.orders = payload;
     }
@@ -51428,17 +51378,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         }));
       });
     },
-    updateCurrency: function updateCurrency(_ref7, payload) {
+    fetchOrders: function fetchOrders(_ref7) {
       var commit = _ref7.commit;
-      axios.put("/cart/currency", payload).then(function (_ref8) {
+      axios.get("/orders/list").then(function (_ref8) {
         var data = _ref8.data;
-        commit("changeCurrency", data);
-      });
-    },
-    fetchOrders: function fetchOrders(_ref9) {
-      var commit = _ref9.commit;
-      axios.get("/orders/list").then(function (_ref10) {
-        var data = _ref10.data;
         commit("setOrders", data);
       });
     }

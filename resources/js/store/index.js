@@ -51,9 +51,6 @@ export default {
                 this._vm.$delete(state.cart, payload.id);
             }
         },
-        changeCurrency(state, payload) {
-            state.currency = payload.currency;
-        },
         setOrders(state, payload) {
           state.orders = payload;
         }
@@ -73,11 +70,6 @@ export default {
         updateCartItem({ commit }, payload) {
             axios.put("/cart/update", payload).then(({ data }) => {
                 commit("updateCartItem", { ...data, id: payload.id });
-            });
-        },
-        updateCurrency({ commit }, payload) {
-            axios.put("/cart/currency", payload).then(({ data }) => {
-                commit("changeCurrency", data);
             });
         },
         fetchOrders({ commit }) {
