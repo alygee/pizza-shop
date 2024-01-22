@@ -18,7 +18,7 @@
                 </nav>
                 <cart />
             </header>
-            <main class="sm:container sm:mx-auto sm:mt-10">
+            <main>
                 <div class="w-full sm:px-6">
                     <router-view></router-view>
                 </div>
