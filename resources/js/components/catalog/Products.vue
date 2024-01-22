@@ -49,7 +49,6 @@ export default {
 <style>
 .catalog .product-card {
     width: 175px;
-    height: 185px;
     background: radial-gradient(
             89.97% 41.34% at 28.49% 34.42%,
             #504d5b 0%,
