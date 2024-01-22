@@ -38,9 +38,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="flex-1 bg-blue">
-                            Main content area
-                        </div>
+                        <div class="flex-1 bg-blue">Main content area</div>
                     </div>
                 </div>
             </div>

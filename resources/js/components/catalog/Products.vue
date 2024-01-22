@@ -122,6 +122,12 @@ export default {
     margin: 0;
 }
 
+.catalog .product-card .product-card-image img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
 .catalog .categories {
     text-align: right;
     margin: 38px 0 26px;

@@ -4368,7 +4368,7 @@ var staticRenderFns = [function () {
     staticClass: "fas fa-newspaper text-gray-500 mr-2 text-sm"
   }), _vm._v("\n                                    Orders")])])])]), _vm._v(" "), _c("div", {
     staticClass: "flex-1 bg-blue"
-  }, [_vm._v("\n                        Main content area\n                    ")])])])])])]);
+  }, [_vm._v("Main content area")])])])])])]);
 }];
 render._withStripped = true;
 
@@ -4515,33 +4515,32 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "max-w-sm rounded overflow-hidden shadow-lg w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4"
+    staticClass: "product-card"
+  }, [_c("div", {
+    staticClass: "product-card-image"
   }, [_c("img", {
-    staticClass: "object-scale-down w-full",
     attrs: {
       src: _vm.product.image,
-      alt: "Sunset in the mountains"
+      alt: _vm.product.name
     }
-  }), _vm._v(" "), _c("div", {
-    staticClass: "px-6 py-4"
-  }, [_c("div", {
-    staticClass: "font-bold text-xl mb-2"
+  })]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "product-card-description"
+  }, [_c("p", {
+    staticClass: "product-card-name"
   }, [_vm._v(_vm._s(_vm.product.name))]), _vm._v(" "), _c("p", {
-    staticClass: "text-gray-700 text-base"
-  }, [_vm._v("\n            " + _vm._s(_vm.product.description) + "\n        ")])]), _vm._v(" "), _c("div", {
-    staticClass: "px-6 py-4"
-  }, [_c("div", {
-    staticClass: "flex justify-between items-center"
-  }, [_c("div", {
-    staticClass: "text-xl text-center py-2 m-2 font-bold"
-  }, [_vm._v("\n                " + _vm._s(_vm.$store.getters.currencySign) + "\n                " + _vm._s(_vm.price()) + "\n            ")]), _vm._v(" "), _c("div", {
-    staticClass: "text-center py-2 m-2"
+    staticClass: "product-card-label"
+  }, [_vm._v(_vm._s(_vm.product.description))])]), _vm._v(" "), _c("div", {
+    staticClass: "product-card-action"
   }, [_c("button", {
-    staticClass: "bg-transparent hover:bg-orange-500 text-orange-500 font-semibold hover:text-white py-2 px-4 border border-orange-500 hover:border-transparent rounded",
+    attrs: {
+      type: "button"
+    },
     on: {
       click: _vm.add
     }
-  }, [_vm._v("\n                    Add\n                ")])])])])]);
+  }, [_vm._v("Add to cart")]), _vm._v(" "), _c("div", {
+    staticClass: "product-card-price"
+  }, [_vm._v("\n                " + _vm._s(_vm.$store.getters.currencySign) + "\n                " + _vm._s(_vm.price()) + "\n            ")])])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -5016,7 +5015,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".catalog .product-card {\n  width: 175px;\n  height: 185px;\n  background: radial-gradient(\n            89.97% 41.34% at 28.49% 34.42%,\n            #504d5b 0%,\n            rgba(30, 29, 34, 0) 100%\n        ),\n        #090909;\n  padding: 0 20px 15px 20px;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n}\n.catalog .products {\n  display: grid;\n  grid-template-columns: repeat(4, 1fr);\n  grid-row-gap: 20px;\n}\n.catalog .product-card .product-card-price {\n  font-size: 9px;\n  font-weight: 700;\n}\n.catalog .product-card .product-card-action {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.catalog .product-card .product-card-action button {\n  border-radius: 5px;\n  background: #ffbd19;\n  color: #fff;\n  text-align: center;\n  font-family: Montserrat;\n  font-size: 7px;\n  font-style: normal;\n  font-weight: 700;\n  line-height: normal;\n  text-transform: uppercase;\n  padding: 4px 14px;\n  border: none;\n  cursor: pointer;\n}\n.catalog .product-card .product-card-action button:hover {\n  background-color: #ff8a00;\n}\n.catalog .product-card .product-card-description {\n  margin: 10px 0;\n}\n.catalog .product-card .product-card-name {\n  color: #fff;\n  font-family: Montserrat;\n  font-size: 9px;\n  font-style: normal;\n  font-weight: 700;\n  line-height: normal;\n  margin: 0 0 2px;\n}\n.catalog .product-card .product-card-label {\n  color: #fff;\n  font-family: Montserrat;\n  font-size: 9px;\n  font-style: normal;\n  font-weight: 400;\n  line-height: normal;\n  margin: 0;\n}\n.catalog .categories {\n  text-align: right;\n  margin: 38px 0 26px;\n}\n.catalog .categories button {\n  color: #fff;\n  text-align: center;\n  font-family: Montserrat;\n  font-size: 10px;\n  font-style: normal;\n  font-weight: 400;\n  line-height: normal;\n  border-radius: 5px;\n  border: 1px solid #504d5b;\n  background-color: transparent;\n  padding: 4px 14px;\n  margin-right: 15px;\n}\n.catalog .categories button:hover,\n.catalog .categories button.active {\n  background: #504d5b;\n}\n", ""]);
+exports.push([module.i, ".catalog .product-card {\n  width: 175px;\n  height: 185px;\n  background: radial-gradient(\n            89.97% 41.34% at 28.49% 34.42%,\n            #504d5b 0%,\n            rgba(30, 29, 34, 0) 100%\n        ),\n        #090909;\n  padding: 0 20px 15px 20px;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n}\n.catalog .products {\n  display: grid;\n  grid-template-columns: repeat(4, 1fr);\n  grid-row-gap: 20px;\n}\n.catalog .product-card .product-card-price {\n  font-size: 9px;\n  font-weight: 700;\n}\n.catalog .product-card .product-card-action {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.catalog .product-card .product-card-action button {\n  border-radius: 5px;\n  background: #ffbd19;\n  color: #fff;\n  text-align: center;\n  font-family: Montserrat;\n  font-size: 7px;\n  font-style: normal;\n  font-weight: 700;\n  line-height: normal;\n  text-transform: uppercase;\n  padding: 4px 14px;\n  border: none;\n  cursor: pointer;\n}\n.catalog .product-card .product-card-action button:hover {\n  background-color: #ff8a00;\n}\n.catalog .product-card .product-card-description {\n  margin: 10px 0;\n}\n.catalog .product-card .product-card-name {\n  color: #fff;\n  font-family: Montserrat;\n  font-size: 9px;\n  font-style: normal;\n  font-weight: 700;\n  line-height: normal;\n  margin: 0 0 2px;\n}\n.catalog .product-card .product-card-label {\n  color: #fff;\n  font-family: Montserrat;\n  font-size: 9px;\n  font-style: normal;\n  font-weight: 400;\n  line-height: normal;\n  margin: 0;\n}\n.catalog .product-card .product-card-image img {\n  -o-object-fit: cover;\n     object-fit: cover;\n  height: 100%;\n  width: 100%;\n}\n.catalog .categories {\n  text-align: right;\n  margin: 38px 0 26px;\n}\n.catalog .categories button {\n  color: #fff;\n  text-align: center;\n  font-family: Montserrat;\n  font-size: 10px;\n  font-style: normal;\n  font-weight: 400;\n  line-height: normal;\n  border-radius: 5px;\n  border: 1px solid #504d5b;\n  background-color: transparent;\n  padding: 4px 14px;\n  margin-right: 15px;\n}\n.catalog .categories button:hover,\n.catalog .categories button.active {\n  background: #504d5b;\n}\n", ""]);
 
 // exports
 
