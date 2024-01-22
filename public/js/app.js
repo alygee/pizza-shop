@@ -4872,43 +4872,69 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "modal-backdrop"
   }, [_c("div", {
-    staticClass: "modal",
+    staticClass: "modal-dialog",
     attrs: {
       role: "dialog",
       "aria-labelledby": "modalTitle",
       "aria-describedby": "modalDescription"
     }
-  }, [_c("header", {
+  }, [_c("div", {
     staticClass: "modal-header"
-  }, [_vm._t("header", function () {
-    return [_vm._v("\n                    This is the default tile!\n\n                    "), _c("button", {
-      staticClass: "btn-close",
-      attrs: {
-        type: "button",
-        "aria-label": "Close modal"
-      },
-      on: {
-        click: _vm.close
+  }, [_c("h3", {
+    staticClass: "modal-title"
+  }, [_vm._v("Sign in")]), _vm._v(" "), _c("div", {
+    staticClass: "modal-close",
+    on: {
+      click: function click($event) {
+        return _vm.$emit("close");
       }
-    }, [_vm._v("\n                        x\n                    ")])];
-  })], 2), _vm._v(" "), _c("section", {
+    }
+  }, [_c("svg", {
+    attrs: {
+      xmlns: "http://www.w3.org/2000/svg",
+      width: "16",
+      height: "16",
+      viewBox: "0 0 16 16",
+      fill: "none"
+    }
+  }, [_c("path", {
+    attrs: {
+      "fill-rule": "evenodd",
+      "clip-rule": "evenodd",
+      d: "M14.7886 15.4958C14.9838 15.691 15.3004 15.691 15.4957 15.4958C15.691 15.3005 15.691 14.9839 15.4957 14.7886L8.7782 8.07115L15.4957 1.35366C15.691 1.1584 15.691 0.841816 15.4957 0.646554C15.3004 0.451292 14.9838 0.451292 14.7886 0.646554L8.07109 7.36405L1.35355 0.646508C1.15829 0.451246 0.84171 0.451245 0.646448 0.646508C0.451186 0.84177 0.451186 1.15835 0.646448 1.35361L7.36398 8.07115L0.646447 14.7887C0.451185 14.984 0.451184 15.3005 0.646447 15.4958C0.841709 15.6911 1.15829 15.6911 1.35355 15.4958L8.07109 8.77826L14.7886 15.4958Z",
+      fill: "#090909",
+      "fill-opacity": "0.3"
+    }
+  })])])]), _vm._v(" "), _c("section", {
     staticClass: "modal-body"
-  }, [_vm._t("body", function () {
-    return [_vm._v(" I'm the default body! ")];
-  })], 2), _vm._v(" "), _c("footer", {
+  }, [_c("input", {
+    attrs: {
+      type: "email",
+      placeholder: "e-mail*",
+      value: "test2@gmail.com"
+    }
+  }), _vm._v(" "), _c("input", {
+    attrs: {
+      type: "text",
+      placeholder: "password*",
+      value: "123456"
+    }
+  })]), _vm._v(" "), _c("div", {
     staticClass: "modal-footer"
-  }, [_vm._t("footer", function () {
-    return [_vm._v("\n                    I'm the default footer!\n\n                    "), _c("button", {
-      staticClass: "btn-green",
-      attrs: {
-        type: "button",
-        "aria-label": "Close modal"
-      },
-      on: {
-        click: _vm.close
+  }, [_c("div", {
+    staticClass: "forgot-password"
+  }, [_c("button", {
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.openModal("passwordRecovery");
       }
-    }, [_vm._v("\n                        Close me!\n                    ")])];
-  })], 2)])])]);
+    }
+  }, [_vm._v("\n                        Forgot your password?\n                    ")])])]), _vm._v(" "), _c("div", {
+    staticClass: "required-note"
+  }, [_vm._v("*Required Fields")])])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -4966,7 +4992,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".modal-backdrop {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  background-color: rgba(0, 0, 0, 0.3);\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n.modal {\n  background: #ffffff;\n  box-shadow: 2px 2px 20px 1px;\n  overflow-x: auto;\n  display: flex;\n  flex-direction: column;\n}\n.modal-header,\n.modal-footer {\n  padding: 15px;\n  display: flex;\n}\n.modal-header {\n  border-bottom: 1px solid #eeeeee;\n  color: #4aae9b;\n  justify-content: space-between;\n}\n.modal-footer {\n  border-top: 1px solid #eeeeee;\n  justify-content: flex-end;\n}\n.modal-body {\n  position: relative;\n  padding: 20px 10px;\n}\n.btn-close {\n  border: none;\n  font-size: 20px;\n  padding: 20px;\n  cursor: pointer;\n  font-weight: bold;\n  color: #4aae9b;\n  background: transparent;\n}\n.btn-green {\n  color: white;\n  background: #4aae9b;\n  border: 1px solid #4aae9b;\n  border-radius: 2px;\n}\n.modal-fade-enter,\n.modal-fade-leave-active {\n  opacity: 0;\n}\n.modal-fade-enter-active,\n.modal-fade-leave-active {\n  transition: opacity 0.5s ease;\n}\n", ""]);
+exports.push([module.i, ".modal-backdrop {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  -webkit-backdrop-filter: blur(4px);\n          backdrop-filter: blur(4px);\n  z-index: 1050;\n  margin: 0;\n  padding: 0;\n  pointer-events: auto;\n  overflow-y: auto;\n}\n.modal-dialog {\n  position: relative;\n  width: 670px;\n  margin: 160px auto 0;\n  background-color: #fff;\n  padding: 32px 32px 64px 32px;\n}\n\n/* свойства для заголовка модального окна */\n.modal-header {\n  display: flex;\n  align-items: flex-start;\n  justify-content: space-between;\n}\n.modal-title {\n  margin-top: 30px;\n  color: #090909;\n  text-align: center;\n  font-size: 24px;\n  font-weight: 700;\n  line-height: 150%;\n  width: 100%;\n}\n.modal-close {\n  padding: 15px;\n  margin: -15px;\n}\n.modal-close:focus,\n.modal-close:hover {\n  cursor: pointer;\n}\n.modal-body {\n  position: relative;\n  width: 552px;\n  margin: 15px auto 20px;\n  color: #000;\n}\n.modal-body input {\n  width: 510px;\n  padding: 7px 20px;\n  border-radius: 5px;\n  border: 1px solid rgba(9, 9, 9, 0.3);\n  color: rgba(9, 9, 9, 0.5);\n  font-size: 16px;\n  font-weight: 400;\n  line-height: 150%; /* 24px */\n}\n.tab-content .tab-content-column section input.has-error,\n.modal-body input.has-error {\n  border: 1px solid #ff004d;\n}\n.tab-content .tab-content-column section input.has-error:focus-visible {\n  outline: 1px solid #ff004d;\n}\n.modal-body input.is-valid {\n  border: 1px solid #ffbd19;\n}\n.modal-body .done {\n  margin-top: -10px;\n  text-align: center;\n}\n.modal-body .done-message {\n  color: #090909;\n  text-align: center;\n  font-family: Montserrat;\n  font-size: 16px;\n  font-style: normal;\n  font-weight: 600;\n  line-height: normal;\n  margin-top: 15px;\n}\n.modal-body .done-back {\n  text-align: center;\n  margin-top: 37px;\n}\n.modal-body .done-back a {\n  color: #090909;\n  text-align: center;\n  font-family: Montserrat;\n  font-size: 12px;\n  font-style: normal;\n  font-weight: 600;\n  line-height: normal;\n  text-decoration: none;\n}\n.modal-body .done-back a .link {\n  color: #090909;\n  font-family: Montserrat;\n  font-size: 12px;\n  font-style: normal;\n  font-weight: 600;\n  line-height: normal;\n  text-decoration: underline;\n}\n.tab-content .tab-content-column section .error-message,\n.modal-body .error-message {\n  color: #ff004d;\n  font-family: Montserrat;\n  font-size: 12px;\n  font-style: normal;\n  font-weight: 400;\n  line-height: normal;\n  margin: 9px 0 20px 20px;\n  text-align: left;\n}\n.modal-body .alert-error {\n  color: #ff004d;\n  font-family: Montserrat;\n  font-size: 16px;\n  font-style: normal;\n  font-weight: 400;\n  line-height: 150%; /* 24px */\n  border-radius: 5px;\n  border: 1px solid #ff004d;\n  background: rgba(255, 0, 77, 0.1);\n  padding: 7px 20px;\n  margin-bottom: 20px;\n}\n.modal-body input + input {\n  margin-top: 20px;\n}\n.modal-body input:focus,\n.modal-body input:focus-visible {\n  outline: 1px solid #ffbd19;\n}\n.modal-body input::-moz-placeholder {\n  color: rgba(9, 9, 9, 0.5);\n  font-size: 16px;\n  font-weight: 400;\n  line-height: 150%; /* 24px */\n}\n.modal-body input::placeholder {\n  color: rgba(9, 9, 9, 0.5);\n  font-size: 16px;\n  font-weight: 400;\n  line-height: 150%; /* 24px */\n}\n.modal-footer {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  width: 552px;\n  margin: 0 auto;\n}\n.modal-footer .yellow-button {\n  font-family: Montserrat;\n  color: #fff;\n  text-align: center;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 500;\n  text-transform: uppercase;\n  padding: 11px 28px;\n  border-radius: 5px;\n  background: #ffbd19;\n  border: none;\n  cursor: pointer;\n}\n.modal-footer .yellow-button:hover {\n  background-color: #ff8a00;\n}\n.modal-footer .forgot-password {\n  margin: 0 20px;\n}\n.modal-footer .forgot-password button {\n  color: #090909;\n  font-size: 12px;\n  font-weight: 600;\n  text-decoration: none;\n  background: none;\n  border: none;\n}\n.modal-footer .forgot-password button:hover {\n  color: #ff8a00;\n}\n.modal-footer .modal-actions {\n  display: flex;\n  align-items: center;\n}\n.yellow-outline-button {\n  font-family: Montserrat;\n  color: #ff8a00;\n  text-align: center;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 500;\n  text-transform: uppercase;\n  padding: 9px 28px;\n  background: #fff;\n  cursor: pointer;\n  border-radius: 5px;\n  border: 1px solid #ff8a00;\n}\n.yellow-outline-return-button {\n  color: #ff8a00;\n  padding: 6px 8px;\n  background: #fff;\n  cursor: pointer;\n  border-radius: 5px;\n  border: 1px solid #ff8a00;\n  margin-right: 15px;\n}\n.yellow-outline-return-button:hover {\n  background-color: #ff8a00;\n  color: #fff;\n}\n.yellow-outline-button:hover {\n  color: #fff;\n  text-align: center;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 500;\n  text-transform: uppercase;\n  padding: 9px 28px;\n  border-radius: 5px;\n  border: none;\n  cursor: pointer;\n  background-color: #ff8a00;\n}\n.required-note {\n  text-align: right;\n  color: rgba(9, 9, 9, 0.3);\n  font-size: 12px;\n  font-weight: 400;\n  width: 552px;\n  margin: 15px auto;\n}\n.payment-footer .actions .agreement {\n  color: #fff;\n  font-family: Montserrat;\n  font-size: 10px;\n  font-style: normal;\n  font-weight: 400;\n  line-height: normal;\n}\n.modal-footer .agreement {\n  color: #090909;\n  font-family: Montserrat;\n  font-size: 12px;\n  font-style: normal;\n  font-weight: 400;\n  line-height: normal;\n}\n.payment-footer .actions .agreement label,\n.modal-footer .agreement label {\n  display: flex;\n  align-items: center;\n  padding-left: 30px;\n}\n.payment-footer .actions .agreement label input,\n.modal-footer .agreement label input {\n  margin-right: 15px;\n  -webkit-appearance: none;\n     -moz-appearance: none;\n          appearance: none;\n  position: absolute;\n}\n.payment-footer .actions .agreement label span {\n  position: absolute;\n  width: 20px;\n  height: 20px;\n  border: 1px solid rgba(255, 255, 255, 0.3);\n  margin-left: -30px;\n  background-image: none;\n}\n.modal-footer .agreement label span {\n  position: absolute;\n  width: 20px;\n  height: 20px;\n  border: 1px solid rgba(9, 9, 9, 0.3);\n  margin-left: -30px;\n  background-image: none;\n}\n.payment-footer .actions .agreement label input:checked + span,\n.modal-footer .agreement label input:checked + span {\n  border: none;\n  background-color: #ffbd19;\n  background-image: url(\"/images/check.icon.svg\");\n  background-repeat: no-repeat;\n  background-position: center center;\n}\n.modal-footer .agreement.has-error {\n  color: #ff004d;\n  font-family: Montserrat;\n  font-size: 12px;\n  font-style: normal;\n  font-weight: 400;\n  line-height: normal;\n}\n.payment-footer .actions .agreement.has-error label span {\n  border: 1px solid #ff004d;\n  background: rgba(255, 0, 77, 0.2);\n}\n.payment-footer .actions .agreement.has-error label {\n  color: #ff004d;\n}\n.modal-footer .agreement.has-error label span {\n  border: 1px solid #ff004d;\n}\n.payment-footer .actions .agreement label a {\n  color: #fff;\n  font-family: Montserrat;\n  font-size: 10px;\n  font-style: normal;\n  font-weight: 600;\n  line-height: normal;\n  -webkit-text-decoration-line: underline;\n          text-decoration-line: underline;\n}\n.modal-footer .agreement label a {\n  color: #090909;\n  font-family: Montserrat;\n  font-size: 12px;\n  font-style: normal;\n  font-weight: 600;\n  line-height: normal;\n  text-decoration: underline;\n}\n.modal-fade-enter,\n.modal-fade-leave-active {\n  opacity: 0;\n}\n.modal-fade-enter-active,\n.modal-fade-leave-active {\n  transition: opacity 0.5s ease;\n}\n", ""]);
 
 // exports
 
