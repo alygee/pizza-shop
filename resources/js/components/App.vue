@@ -10,8 +10,8 @@
                             </a>
                         </li>
                         <li>
-                            <router-link :to="{ name: 'menu' }">
-                                Menu
+                            <router-link :to="{ name: 'catalog' }">
+                                Products
                             </router-link>
                         </li>
                     </ul>

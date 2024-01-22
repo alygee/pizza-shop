@@ -1,4 +1,4 @@
-import MenuGrid from "./components/menu/MenuGrid";
+import Products from "./components/catalog/Products";
 import Profile from "./components/Dashboard";
 import Register from "./components/Register.vue";
 import Login from "./components/Login.vue";
@@ -10,8 +10,8 @@ import ThankYou from "./components/Thanks.vue";
 export default [
     {
         path: "/",
-        name: "menu",
-        component: MenuGrid,
+        name: "catalog",
+        component: Products,
         meta: {
             auth: undefined
         }
