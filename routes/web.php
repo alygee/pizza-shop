@@ -22,6 +22,7 @@ Route::get('cart/list', [CartController::class, 'list']);
 Route::post('cart/{id}', [CartController::class, 'add']);
 Route::delete('cart/{id}', [CartController::class, 'delete']);
 Route::put('cart/update', [CartController::class, 'update']);
+Route::put('/cart/remove', [CartController::class, 'remove']);
 Route::put('cart/currency', [CartController::class, 'currency']);
 Route::resource('orders/piu', OrderController::class)
     ->only(['index', 'store', 'update', 'show']);

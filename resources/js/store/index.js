@@ -46,6 +46,10 @@ export default {
             }
             this._vm.$toastr.i("Added to cart");
         },
+        removeCartItem(state, payload) {
+            this._vm.$delete(state.cart, payload.id);
+            this._vm.$toastr.i("Item removed");
+        },
         updateCartItem(state, payload) {
             if (!payload.quantity) {
                 this._vm.$delete(state.cart, payload.id);
@@ -85,6 +89,11 @@ export default {
         updateCartItem({ commit }, payload) {
             axios.put("/cart/update", payload).then(({ data }) => {
                 commit("updateCartItem", { ...data, id: payload.id });
+            });
+        },
+        removeCartItem({ commit }, payload) {
+            axios.put("/cart/remove", payload).then(({ data }) => {
+                commit("removeCartItem", { ...data, id: payload.id });
             });
         },
         fetchOrders({ commit }) {

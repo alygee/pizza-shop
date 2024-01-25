@@ -3709,7 +3709,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         quantity: event.target.value
       });
       this.$store.dispatch("updateCartItem", item);
-    }, 300)
+    }, 300),
+    removeProduct: function removeProduct(product) {
+      this.$store.dispatch("removeCartItem", product);
+    }
   }
 });
 
@@ -4809,7 +4812,12 @@ var render = function render() {
     }, [_c("div"), _vm._v(" "), _c("div", {
       staticClass: "product-price"
     }, [_vm._v("\n                                $" + _vm._s(product.price) + "\n                            ")]), _vm._v(" "), _c("div", {
-      staticClass: "product-remove"
+      staticClass: "product-remove",
+      on: {
+        click: function click($event) {
+          return _vm.removeProduct(product);
+        }
+      }
     }, [_c("svg", {
       attrs: {
         xmlns: "http://www.w3.org/2000/svg",
@@ -5207,7 +5215,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".checkout {\n  display: flex;\n  text-align: center;\n  font-size: 16px;\n  font-weight: 600;\n  padding-bottom: 18px;\n}\n.checkout .products {\n  border-radius: 5px;\n  background: rgba(80, 77, 91, 0.15);\n  padding: 40px 30px;\n}\n.checkout .products table {\n  width: 100%;\n}\n.checkout .products table th {\n  text-align: center;\n  font-size: 16px;\n  font-weight: 600;\n  border-bottom: 1px solid #504d5b;\n  padding-bottom: 18px;\n}\n.checkout .products table td {\n  text-align: center;\n}\n.checkout .products table td.qty {\n  font-size: 14px;\n  font-weight: 400;\n  text-align: center;\n}\n.checkout .products table td.qty input {\n  font-family: Montserrat;\n  background-color: transparent;\n  padding: 8px 10px;\n  border-radius: 5px;\n  border: none;\n  color: #fff;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 300;\n  text-align: center;\n}\n.checkout .products table td .product {\n  display: flex;\n  align-items: center;\n  text-align: left;\n  padding: 10px 0;\n}\n.checkout .products table td .product img {\n  width: 118px;\n  height: 108px;\n}\n.checkout .products table td .product .product-name {\n  font-size: 14px;\n  font-weight: 700;\n}\n.checkout .products table td .product .product-description {\n  font-size: 12px;\n  font-weight: 400;\n  color: rgba(255, 255, 255, 0.6);\n  margin-top: 5px;\n}\n.checkout .products table td .product-price-wrapper {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.checkout .products table td .product-price {\n  color: #fff;\n  text-align: right;\n  font-family: Montserrat;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 600;\n  line-height: normal;\n  margin: 0 15px;\n}\n.checkout .products table td .product-remove {\n  cursor: pointer;\n  color: #ffffff4d;\n}\n.checkout .products table td .product-remove:hover svg {\n  color: #fff;\n}\n.checkout .payment {\n  border-radius: 5px;\n  background: rgba(80, 77, 91, 0.15);\n  margin-left: 17px;\n  padding: 10px 30px 35px;\n  text-align: left;\n}\n.checkout .payment .payment-header {\n  padding: 30px 0 18px;\n  border-bottom: 1px solid #504d5b;\n}\n.checkout .payment h2 {\n  color: #fff;\n  text-align: center;\n  font-family: Montserrat;\n  font-size: 16px;\n  font-style: normal;\n  font-weight: 600;\n  line-height: normal;\n  margin: 0;\n}\n.checkout .payment input.promo:focus-visible {\n  outline: 1px solid #504d5b;\n}\n.checkout .payment .payment-body {\n  padding: 30px 0 25px;\n  border-bottom: 1px solid #504d5b;\n}\n.checkout .payment .promo-wrapper {\n  margin: 0 0 20px;\n  display: flex;\n  flex-direction: row;\n}\n.checkout .payment .promo-wrapper button {\n  background-color: #fff;\n  border-radius: 0 5px 0px 0px;\n  border-top: 1px solid #504d5b;\n  border-right: 1px solid #504d5b;\n  border-bottom: 1px solid #504d5b;\n  border-left: none;\n  cursor: pointer;\n}\n.checkout .payment .promo-wrapper input.promo {\n  flex-grow: 2;\n  font-family: Montserrat;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 400;\n  line-height: 150%; /* 21px */\n  border-top: 1px solid #504d5b;\n  border-left: 1px solid #504d5b;\n  border-right: none;\n  border-bottom: 1px solid #504d5b;\n  border-radius: 5px 0px 0px 5px;\n  background: #fff;\n  padding: 6px 20px;\n  color: #090909;\n  text-transform: uppercase;\n}\n.checkout .payment .promo-wrapper button svg {\n  color: rgba(9, 9, 9, 0.3);\n}\n.checkout .payment .promo-wrapper.success button svg {\n  color: #ff8a00;\n}\n.checkout .payment h3 {\n  color: #fff;\n  font-family: Montserrat;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 600;\n}\n.checkout .payment .subtotal > div {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  color: #fff;\n  font-family: Montserrat;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 400;\n  line-height: 150%; /* 21px */\n  margin-bottom: 5px;\n}\n.checkout .payment .subtotal .value {\n  color: #fff;\n  text-align: right;\n  font-family: Montserrat;\n  font-size: 16px;\n  font-style: normal;\n  font-weight: 700;\n  line-height: 150%; /* 24px */\n}\n.checkout .payment .payment-footer {\n  margin-top: 30px;\n}\n.checkout .payment .payment-footer .total {\n  display: flex;\n  align-items: flex-start;\n  justify-content: space-between;\n  color: #fff;\n  font-family: Montserrat;\n  font-size: 18px;\n  font-style: normal;\n  font-weight: 600;\n  line-height: 150%; /* 27px */\n}\n.checkout .payment .payment-footer .amount {\n  text-align: right;\n  font-weight: 700;\n}\n.checkout .payment .payment-footer .amount .tax-label {\n  color: rgba(255, 255, 255, 0.3);\n  text-align: center;\n  font-family: Montserrat;\n  font-size: 8px;\n  font-style: normal;\n  font-weight: 500;\n  line-height: 150%; /* 12px */\n}\n.checkout .payment .payment-footer .actions {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  margin-top: 20px;\n}\n.checkout .payment .payment-footer .actions .pay button {\n  font-family: Montserrat;\n  color: #fff;\n  text-align: center;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 500;\n  text-transform: uppercase;\n  padding: 6px 28px;\n  border-radius: 5px;\n  background: #ffbd19;\n  border: none;\n  cursor: pointer;\n}\n.checkout .payment .payment-footer .actions .pay button:hover {\n  background-color: #ff8a00;\n}\n", ""]);
+exports.push([module.i, ".checkout {\n  display: flex;\n  text-align: center;\n  font-size: 16px;\n  font-weight: 600;\n  padding-bottom: 18px;\n}\n.checkout .products {\n  border-radius: 5px;\n  background: rgba(80, 77, 91, 0.15);\n  padding: 40px 30px;\n  width: 100%;\n}\n.checkout .products table {\n  width: 100%;\n}\n.checkout .products table th {\n  text-align: center;\n  font-size: 16px;\n  font-weight: 600;\n  border-bottom: 1px solid #504d5b;\n  padding-bottom: 18px;\n}\n.checkout .products table td {\n  text-align: center;\n}\n.checkout .products table td.qty {\n  font-size: 14px;\n  font-weight: 400;\n  text-align: center;\n}\n.checkout .products table td.qty input {\n  font-family: Montserrat;\n  background-color: transparent;\n  padding: 8px 10px;\n  border-radius: 5px;\n  border: none;\n  color: #fff;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 300;\n  text-align: center;\n}\n.checkout .products table td .product {\n  display: flex;\n  align-items: center;\n  text-align: left;\n  padding: 10px 0;\n}\n.checkout .products table td .product img {\n  width: 118px;\n  height: 108px;\n}\n.checkout .products table td .product .product-name {\n  font-size: 14px;\n  font-weight: 700;\n}\n.checkout .products table td .product .product-description {\n  font-size: 12px;\n  font-weight: 400;\n  color: rgba(255, 255, 255, 0.6);\n  margin-top: 5px;\n}\n.checkout .products table td .product-price-wrapper {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n.checkout .products table td .product-price {\n  color: #fff;\n  text-align: right;\n  font-family: Montserrat;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 600;\n  line-height: normal;\n  margin: 0 15px;\n}\n.checkout .products table td .product-remove {\n  cursor: pointer;\n  color: #ffffff4d;\n}\n.checkout .products table td .product-remove:hover svg {\n  color: #fff;\n}\n.checkout .payment {\n  border-radius: 5px;\n  background: rgba(80, 77, 91, 0.15);\n  margin-left: 17px;\n  padding: 10px 30px 35px;\n  text-align: left;\n}\n.checkout .payment .payment-header {\n  padding: 30px 0 18px;\n  border-bottom: 1px solid #504d5b;\n}\n.checkout .payment h2 {\n  color: #fff;\n  text-align: center;\n  font-family: Montserrat;\n  font-size: 16px;\n  font-style: normal;\n  font-weight: 600;\n  line-height: normal;\n  margin: 0;\n}\n.checkout .payment input.promo:focus-visible {\n  outline: 1px solid #504d5b;\n}\n.checkout .payment .payment-body {\n  padding: 30px 0 25px;\n  border-bottom: 1px solid #504d5b;\n}\n.checkout .payment .promo-wrapper {\n  margin: 0 0 20px;\n  display: flex;\n  flex-direction: row;\n}\n.checkout .payment .promo-wrapper button {\n  background-color: #fff;\n  border-radius: 0 5px 0px 0px;\n  border-top: 1px solid #504d5b;\n  border-right: 1px solid #504d5b;\n  border-bottom: 1px solid #504d5b;\n  border-left: none;\n  cursor: pointer;\n}\n.checkout .payment .promo-wrapper input.promo {\n  flex-grow: 2;\n  font-family: Montserrat;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 400;\n  line-height: 150%; /* 21px */\n  border-top: 1px solid #504d5b;\n  border-left: 1px solid #504d5b;\n  border-right: none;\n  border-bottom: 1px solid #504d5b;\n  border-radius: 5px 0px 0px 5px;\n  background: #fff;\n  padding: 6px 20px;\n  color: #090909;\n  text-transform: uppercase;\n}\n.checkout .payment .promo-wrapper button svg {\n  color: rgba(9, 9, 9, 0.3);\n}\n.checkout .payment .promo-wrapper.success button svg {\n  color: #ff8a00;\n}\n.checkout .payment h3 {\n  color: #fff;\n  font-family: Montserrat;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 600;\n}\n.checkout .payment .subtotal > div {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  color: #fff;\n  font-family: Montserrat;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 400;\n  line-height: 150%; /* 21px */\n  margin-bottom: 5px;\n}\n.checkout .payment .subtotal .value {\n  color: #fff;\n  text-align: right;\n  font-family: Montserrat;\n  font-size: 16px;\n  font-style: normal;\n  font-weight: 700;\n  line-height: 150%; /* 24px */\n}\n.checkout .payment .payment-footer {\n  margin-top: 30px;\n}\n.checkout .payment .payment-footer .total {\n  display: flex;\n  align-items: flex-start;\n  justify-content: space-between;\n  color: #fff;\n  font-family: Montserrat;\n  font-size: 18px;\n  font-style: normal;\n  font-weight: 600;\n  line-height: 150%; /* 27px */\n}\n.checkout .payment .payment-footer .amount {\n  text-align: right;\n  font-weight: 700;\n}\n.checkout .payment .payment-footer .amount .tax-label {\n  color: rgba(255, 255, 255, 0.3);\n  text-align: center;\n  font-family: Montserrat;\n  font-size: 8px;\n  font-style: normal;\n  font-weight: 500;\n  line-height: 150%; /* 12px */\n}\n.checkout .payment .payment-footer .actions {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  margin-top: 20px;\n}\n.checkout .payment .payment-footer .actions .pay button {\n  font-family: Montserrat;\n  color: #fff;\n  text-align: center;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 500;\n  text-transform: uppercase;\n  padding: 6px 28px;\n  border-radius: 5px;\n  background: #ffbd19;\n  border: none;\n  cursor: pointer;\n}\n.checkout .payment .payment-footer .actions .pay button:hover {\n  background-color: #ff8a00;\n}\n", ""]);
 
 // exports
 
@@ -52019,6 +52027,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       }
       this._vm.$toastr.i("Added to cart");
     },
+    removeCartItem: function removeCartItem(state, payload) {
+      this._vm.$delete(state.cart, payload.id);
+      this._vm.$toastr.i("Item removed");
+    },
     updateCartItem: function updateCartItem(state, payload) {
       if (!payload.quantity) {
         this._vm.$delete(state.cart, payload.id);
@@ -52071,17 +52083,26 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         }));
       });
     },
-    fetchOrders: function fetchOrders(_ref7) {
+    removeCartItem: function removeCartItem(_ref7, payload) {
       var commit = _ref7.commit;
-      axios.get("/orders/list").then(function (_ref8) {
+      axios.put("/cart/remove", payload).then(function (_ref8) {
         var data = _ref8.data;
+        commit("removeCartItem", _objectSpread(_objectSpread({}, data), {}, {
+          id: payload.id
+        }));
+      });
+    },
+    fetchOrders: function fetchOrders(_ref9) {
+      var commit = _ref9.commit;
+      axios.get("/orders/list").then(function (_ref10) {
+        var data = _ref10.data;
         commit("setOrders", data);
       });
     },
-    removeFromCart: function removeFromCart(_ref9, productId) {
-      var commit = _ref9.commit;
-      axios["delete"]("/cart/".concat(productId)).then(function (_ref10) {
-        var data = _ref10.data;
+    removeFromCart: function removeFromCart(_ref11, productId) {
+      var commit = _ref11.commit;
+      axios["delete"]("/cart/".concat(productId)).then(function (_ref12) {
+        var data = _ref12.data;
         commit("removeFromCart", productId);
       });
     }

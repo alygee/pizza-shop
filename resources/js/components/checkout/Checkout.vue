@@ -37,7 +37,10 @@
                                 <div class="product-price">
                                     ${{ product.price }}
                                 </div>
-                                <div class="product-remove">
+                                <div
+                                    class="product-remove"
+                                    @click="removeProduct(product)"
+                                >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         width="11"
@@ -147,6 +150,9 @@ export default {
             const item = { ...product, quantity: event.target.value };
             this.$store.dispatch("updateCartItem", item);
         }, 300),
+        removeProduct(product) {
+            this.$store.dispatch("removeCartItem", product);
+        },
     },
 };
 </script>
@@ -164,6 +170,7 @@ export default {
     border-radius: 5px;
     background: rgba(80, 77, 91, 0.15);
     padding: 40px 30px;
+    width: 100%;
 }
 
 .checkout .products table {
