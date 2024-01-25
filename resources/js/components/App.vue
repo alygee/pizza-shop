@@ -19,9 +19,7 @@
                 <cart />
             </header>
             <main>
-                <div class="w-full sm:px-6">
-                    <router-view></router-view>
-                </div>
+                <router-view />
             </main>
         </div>
         <div v-if="!$auth.ready()">Loading...</div>

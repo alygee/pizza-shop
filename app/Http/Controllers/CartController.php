@@ -74,7 +74,7 @@ class CartController extends Controller
         if ($request->id) {
             if ($request->quantity > 0) {
                 $cart = $request->session()->get('cart');
-                $cart[$request->id]["quantity"] = $request->quantity;
+                $cart[$request->id]["quantity"] = intval($request->quantity);
                 $request->session()->put('cart', $cart);
                 return response()->json($cart[$request->id]);
             } else {

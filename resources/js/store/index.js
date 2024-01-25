@@ -50,6 +50,8 @@ export default {
             if (!payload.quantity) {
                 this._vm.$delete(state.cart, payload.id);
             }
+            state.cart[payload.id].quantity = payload.quantity;
+            this._vm.$toastr.i("Cart updated");
         },
         setOrders(state, payload) {
             state.orders = payload;
