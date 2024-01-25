@@ -3451,6 +3451,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.$store.dispatch("cart");
+    window.piu = this.removeProduct;
   },
   data: function data() {
     return {
@@ -3472,19 +3473,29 @@ __webpack_require__.r(__webpack_exports__);
     amount: function amount() {
       return Number(this.$store.getters.amount * this.$store.getters.currencyMultiplier).toFixed(2);
     },
-    content: function content() {
+    removeProduct: function removeProduct() {
       var _this = this;
+      return function (productId) {
+        _this.$store.dispatch("removeFromCart", productId);
+      };
+    },
+    content: function content() {
+      if (!this.cartQty) {
+        return "";
+      }
+      var items = "";
+      _.forEach(this.$store.getters.cartItems, function (item) {
+        if (!item) return;
+        var qty = item.quantity > 1 ? " (".concat(item.quantity, ")") : "";
+        items += "\n                    <div class=\"item\">\n                      <img src=\"images/product.png\" alt=\"product image\" />\n                    <div class=\"product-name\">".concat(item.name, "</div>\n                    <div class=\"product-price\">$").concat(item.price).concat(qty, "</div>\n                    <div class=\"product-remove\" onclick=\"piu(").concat(item.id, ")\">\n                        <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"11\" height=\"11\" viewBox=\"0 0 11 11\" fill=\"none\">\n                          <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M9.38547 10.4729C9.58073 10.6682 9.89731 10.6682 10.0926 10.4729C10.2878 10.2777 10.2878 9.9611 10.0926 9.76584L5.82664 5.49991L10.0926 1.23398C10.2878 1.03872 10.2878 0.722136 10.0926 0.526874C9.89731 0.331611 9.58073 0.331611 9.38547 0.526874L5.11954 4.7928L0.853554 0.526818C0.658292 0.331555 0.34171 0.331556 0.146448 0.526818C-0.0488146 0.72208 -0.0488151 1.03866 0.146448 1.23392L4.41243 5.49991L0.146447 9.76589C-0.0488158 9.96116 -0.0488154 10.2777 0.146447 10.473C0.341709 10.6683 0.658291 10.6683 0.853554 10.473L5.11954 6.20702L9.38547 10.4729Z\" fill=\"currentColor\" />\n                        </svg>\n                      </div>\n                    </div>\n              ");
+      });
+      return "\n            <div class=\"cart\">\n                <div class=\"items\">".concat(items, "</div>\n              <div class=\"footer\">\n                <div>Total</div>\n                <div class=\"amount\">\n                    <div class=\"value\">$").concat(this.amount, "</div>\n                  <div class=\"tax-label\">Vat may apply</div>\n                </div>\n              </div>\n              <div class=\"action\">\n                <button type=\"button\" class=\"yellow-button\" onclick=\"window.location.replace('/checkout')\">Go to cart</button>\n              </div>\n            </div>\n            ");
       if (!this.cartQty) {
         return "\n                  <div class=\"px-6 bg-white border shadow rounded-lg\">\n                    <div class=\"font-bold py-6 bg-white\">Oops, it\u2019s empty here!</div>\n                  </div>";
       }
       var start = "<div class=\"px-6 bg-white border shadow rounded-lg\">\n              <table class=\"table-auto\">\n              <thead>\n                <tr>\n                  <th class=\"px-4 py-2\">Name</th>\n                  <th class=\"px-4 py-2\">Qty</th>\n                  <th class=\"px-4 py-2\">Price</th>\n                </tr>\n              </thead>\n              <tbody>\n            ";
       var end = "</tbody></table>";
       var amount = "\n              <div class=\"flex justify-between w-full p-4 font-bold\">\n                <p class=\"py-4\">Amount: ".concat(this.sign, " ").concat(this.amount, "</p>\n                <a href=\"/checkout\" class=\"py-4 text-orange-500 hover:text-orange-600\">\n                  Checkout\n                </a>\n              </div>\n            ");
-      var items = "";
-      _.forEach(this.$store.getters.cartItems, function (item) {
-        if (!item) return;
-        items += "<tr>\n                <td class=\"border px-4 py-2\">".concat(item.name, "</td>\n                <td class=\"border px-4 py-2\">").concat(item.quantity, "</td>\n                <td class=\"border px-4 py-2\">").concat(_this.price(item), "</td>\n              </tr>");
-      });
       return start + items + end + amount;
     }
   },
@@ -4480,7 +4491,7 @@ var render = function render() {
       d: "M1 0C0.585786 0 0.25 0.335786 0.25 0.75C0.25 1.16421 0.585786 1.5 1 1.5H2.88524L3.38431 3.99348C3.38746 4.01335 3.39139 4.03295 3.39607 4.05227L4.43937 9.26486L4.43952 9.26559C4.53108 9.72569 4.78147 10.139 5.14692 10.4332C5.51048 10.7258 5.96487 10.8821 6.43137 10.875H12.4936C12.9601 10.8821 13.4145 10.7258 13.7781 10.4332C14.1437 10.1388 14.3942 9.72526 14.4856 9.26486L14.4857 9.26487L14.4867 9.25925L15.4867 4.0155C15.5286 3.79593 15.4704 3.56914 15.3279 3.39692C15.1854 3.2247 14.9735 3.125 14.75 3.125H4.74023L4.23541 0.602807C4.16526 0.252289 3.85747 0 3.5 0H1ZM5.91041 8.97156L5.04045 4.625H13.8435L13.0139 8.97478C12.9907 9.08902 12.9283 9.19159 12.8375 9.26471C12.7461 9.3383 12.6317 9.37739 12.5144 9.37514L12.5 9.375H6.425L6.41063 9.37514C6.2933 9.37739 6.17893 9.3383 6.08752 9.26471C5.99611 9.19113 5.93349 9.08774 5.91063 8.97264L5.91041 8.97156ZM6 14C6.55228 14 7 13.5523 7 13C7 12.4477 6.55228 12 6 12C5.44772 12 5 12.4477 5 13C5 13.5523 5.44772 14 6 14ZM13.25 14C13.8023 14 14.25 13.5523 14.25 13C14.25 12.4477 13.8023 12 13.25 12C12.6977 12 12.25 12.4477 12.25 13C12.25 13.5523 12.6977 14 13.25 14Z",
       fill: "currentColor"
     }
-  })]), _vm._v(" "), _c("span", [_vm._v(_vm._s(_vm.cartQty))])])])])]), _vm._v(" "), _c("Modal", {
+  })]), _vm._v(" "), _c("span", [_vm._v(_vm._s(_vm.cartQty || ""))])])])])]), _vm._v(" "), _c("Modal", {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -5012,7 +5023,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "header nav ul.personal-menu li {\n  padding: 10px 12px;\n}\nheader nav .personal-menu li a {\n  color: #fff;\n  text-decoration: none;\n  position: relative;\n}\nheader nav .personal-menu li a:hover span,\nheader nav .personal-menu li a:hover svg {\n  color: #ffbd19;\n}\nheader nav .personal-menu li span,\nheader nav .personal-menu li svg {\n  color: #fff;\n}\nheader nav .personal-menu li span {\n  font-size: 12px;\n  font-weight: 500;\n  position: absolute;\n  bottom: 3px;\n  left: 20px;\n}\nheader nav ul.personal-menu {\n  margin-right: 12px;\n}\nheader .cart::before {\n  border-left: 15px solid transparent;\n  border-bottom: 15px solid #504d5b;\n  content: \"\";\n  position: absolute;\n  top: -15px;\n  right: 20px;\n}\nheader .cart {\n  position: absolute;\n  right: 24px;\n  width: 310px;\n  border-radius: 10px;\n  background: #504d5b;\n  top: 60px;\n  padding-bottom: 30px;\n}\nheader .cart .footer {\n  display: flex;\n  align-items: flex-start;\n  justify-content: space-between;\n  color: #fff;\n  text-align: center;\n  font-family: Montserrat;\n  font-size: 18px;\n  font-style: normal;\n  font-weight: 700;\n  line-height: 150%; /* 27px */\n  padding: 10px 14px;\n  margin: 0 35px;\n  border-top: 1px solid rgba(255, 255, 255, 0.3);\n}\nheader .cart .items {\n  margin-bottom: 8px;\n  max-height: 235px;\n  overflow-y: auto;\n  padding: 20px 35px 0;\n}\nheader .cart .items .item {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  height: 78px;\n}\nheader .cart .items .item img {\n  width: 78px;\n}\nheader .cart .items .item .product-name {\n  color: #fff;\n  font-family: Montserrat;\n  font-size: 11px;\n  font-style: normal;\n  font-weight: 600;\n  line-height: normal;\n  width: 100px;\n}\nheader .cart .items .item .product-price {\n  color: #fff;\n  text-align: right;\n  font-family: Montserrat;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 600;\n  line-height: normal;\n  margin-right: 14px;\n}\nheader .cart .items .item .product-remove {\n  cursor: pointer;\n  color: #ffffff4d;\n}\nheader .cart .items .item .product-remove:hover svg {\n  color: #fff;\n}\nheader .cart .footer .amount {\n  text-align: right;\n  color: #ffbd19;\n}\nheader .cart .footer .amount .tax-label {\n  color: rgba(255, 255, 255, 0.3);\n  text-align: center;\n  font-family: Montserrat;\n  font-size: 8px;\n  font-style: normal;\n  font-weight: 500;\n  line-height: 150%; /* 12px */\n}\nheader .cart .action {\n  text-align: center;\n  margin-top: 10px;\n}\nheader .cart .action .yellow-button {\n  font-family: Montserrat;\n  color: #fff;\n  text-align: center;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 500;\n  text-transform: uppercase;\n  border-radius: 5px;\n  background: #ffbd19;\n  border: none;\n  cursor: pointer;\n  padding: 6px 28px;\n  background: linear-gradient(0deg, #ffbd19 0%, #ffbd19 100%), #ff8a00;\n}\nheader .cart .action .yellow-button:hover {\n  background-color: #ff8a00;\n}\n", ""]);
+exports.push([module.i, "header nav ul.personal-menu li {\n  padding: 10px 12px;\n}\nheader nav .personal-menu li a {\n  color: #fff;\n  text-decoration: none;\n  position: relative;\n}\nheader nav .personal-menu li a:hover span,\nheader nav .personal-menu li a:hover svg {\n  color: #ffbd19;\n}\nheader nav .personal-menu li span,\nheader nav .personal-menu li svg {\n  color: #fff;\n}\nheader nav .personal-menu li span {\n  font-size: 12px;\n  font-weight: 500;\n  position: absolute;\n  bottom: 3px;\n  left: 20px;\n}\nheader nav ul.personal-menu {\n  margin-right: 12px;\n}\n.cart::before {\n  border-left: 15px solid transparent;\n  border-bottom: 15px solid #504d5b;\n  content: \"\";\n  position: absolute;\n  top: -15px;\n  right: 20px;\n}\n.cart {\n  position: absolute;\n  width: 310px;\n  border-radius: 10px;\n  background: #504d5b;\n  top: 0;\n  right: -24px;\n  padding-bottom: 30px;\n}\n.cart .footer {\n  display: flex;\n  align-items: flex-start;\n  justify-content: space-between;\n  color: #fff;\n  text-align: center;\n  font-family: Montserrat;\n  font-size: 18px;\n  font-style: normal;\n  font-weight: 700;\n  line-height: 150%; /* 27px */\n  padding: 10px 14px;\n  margin: 0 35px;\n  border-top: 1px solid rgba(255, 255, 255, 0.3);\n}\n.cart .items {\n  margin-bottom: 8px;\n  max-height: 235px;\n  overflow-y: auto;\n  padding: 20px 35px 0;\n}\n.cart .items .item {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  height: 78px;\n}\n.cart .items .item img {\n  width: 78px;\n}\n.cart .items .item .product-name {\n  color: #fff;\n  font-family: Montserrat;\n  font-size: 11px;\n  font-style: normal;\n  font-weight: 600;\n  line-height: normal;\n  width: 100px;\n}\n.cart .items .item .product-price {\n  color: #fff;\n  text-align: right;\n  font-family: Montserrat;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 600;\n  line-height: normal;\n  margin-right: 14px;\n  width: 60px;\n}\n.cart .items .item .product-remove {\n  cursor: pointer;\n  color: #ffffff4d;\n}\n.cart .items .item .product-remove:hover svg {\n  color: #fff;\n}\n.cart .footer .amount {\n  text-align: right;\n  color: #ffbd19;\n}\n.cart .footer .amount .tax-label {\n  color: rgba(255, 255, 255, 0.3);\n  text-align: center;\n  font-family: Montserrat;\n  font-size: 8px;\n  font-style: normal;\n  font-weight: 500;\n  line-height: 150%; /* 12px */\n}\n.cart .action {\n  text-align: center;\n  margin-top: 10px;\n}\n.cart .action .yellow-button {\n  font-family: Montserrat;\n  color: #fff;\n  text-align: center;\n  font-size: 14px;\n  font-style: normal;\n  font-weight: 500;\n  text-transform: uppercase;\n  border-radius: 5px;\n  background: #ffbd19;\n  border: none;\n  cursor: pointer;\n  padding: 6px 28px;\n  background: linear-gradient(0deg, #ffbd19 0%, #ffbd19 100%), #ff8a00;\n}\n.cart .action .yellow-button:hover {\n  background-color: #ff8a00;\n}\n", ""]);
 
 // exports
 
@@ -51802,6 +51813,18 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     setOrders: function setOrders(state, payload) {
       state.orders = payload;
+    },
+    removeFromCart: function removeFromCart(state, productId) {
+      if (!state.cart[productId]) {
+        console.error("no such item");
+        return;
+      }
+      if (state.cart[productId].quantity > 1) {
+        state.cart[productId].quantity--;
+      } else {
+        this._vm.$delete(state.cart, productId);
+      }
+      this._vm.$toastr.i("Removed from cart");
     }
   },
   actions: {
@@ -51838,6 +51861,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       axios.get("/orders/list").then(function (_ref8) {
         var data = _ref8.data;
         commit("setOrders", data);
+      });
+    },
+    removeFromCart: function removeFromCart(_ref9, productId) {
+      var commit = _ref9.commit;
+      axios["delete"]("/cart/".concat(productId)).then(function (_ref10) {
+        var data = _ref10.data;
+        commit("removeFromCart", productId);
       });
     }
   }

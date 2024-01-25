@@ -14,12 +14,13 @@ use App\Http\Controllers\{CartController, OrderController};
 |
 */
 
-Route::get('/{any?}', function (){
+Route::get('/{any?}', function () {
     return view('spa');
 })->where('any', '^(?!(api|storage|cart|orders)\/)[\/\w\.-]*');
 
 Route::get('cart/list', [CartController::class, 'list']);
 Route::post('cart/{id}', [CartController::class, 'add']);
+Route::delete('cart/{id}', [CartController::class, 'delete']);
 Route::put('cart/update', [CartController::class, 'update']);
 Route::put('cart/currency', [CartController::class, 'currency']);
 Route::resource('orders/piu', OrderController::class)

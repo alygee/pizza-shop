@@ -3,13 +3,13 @@ export default {
         cart: {},
         currency: "usd",
         orders: [],
-        user: {}
+        user: {},
     },
     getters: {
         cartQty(state) {
             return _.reduce(
                 state.cart,
-                function(sum, n) {
+                function (sum, n) {
                     return n && n.quantity ? sum + n.quantity : sum;
                 },
                 0
@@ -18,7 +18,7 @@ export default {
         amount(state) {
             return _.reduce(
                 state.cart,
-                function(sum, n) {
+                function (sum, n) {
                     return n && n.quantity ? sum + n.quantity * n.price : sum;
                 },
                 0
@@ -32,7 +32,7 @@ export default {
         },
         cartItems(state) {
             return _.omit(state.cart, "currency");
-        }
+        },
     },
     mutations: {
         cart(state, payload) {
@@ -52,8 +52,21 @@ export default {
             }
         },
         setOrders(state, payload) {
-          state.orders = payload;
-        }
+            state.orders = payload;
+        },
+        removeFromCart(state, productId) {
+            if (!state.cart[productId]) {
+                console.error("no such item");
+                return;
+            }
+
+            if (state.cart[productId].quantity > 1) {
+                state.cart[productId].quantity--;
+            } else {
+                this._vm.$delete(state.cart, productId);
+            }
+            this._vm.$toastr.i("Removed from cart");
+        },
     },
     actions: {
         cart({ commit }) {
@@ -77,5 +90,10 @@ export default {
                 commit("setOrders", data);
             });
         },
-    }
+        removeFromCart({ commit }, productId) {
+            axios.delete(`/cart/${productId}`).then(({ data }) => {
+                commit("removeFromCart", productId);
+            });
+        },
+    },
 };

@@ -11,26 +11,28 @@ class CartController extends Controller
     {
         $product = Product::find($id);
 
-        if(!$product) {
+        if (!$product) {
             abort(404);
         }
 
         $cart = $request->session()->get('cart');
 
-        if(!$cart) {
+        if (!$cart) {
             $cart = [
-                    $id => [
-                        "name" => $product->name,
-                        "description" => $product->description,
-                        "quantity" => 1,
-                        "price" => $product->price,
-                        "image" => $product->image
-                    ]
+                $id => [
+                    "id" => $product->id,
+                    "name" => $product->name,
+                    "description" => $product->description,
+                    "quantity" => 1,
+                    "price" => $product->price,
+                    "image" => $product->image
+                ]
             ];
-        } else if(isset($cart[$id])) {
+        } elseif (isset($cart[$id])) {
             $cart[$id]['quantity']++;
         } else {
             $cart[$id] = [
+                "id" => $product->id,
                 "name" => $product->name,
                 "description" => $product->description,
                 "quantity" => 1,
@@ -43,9 +45,33 @@ class CartController extends Controller
         return response()->json($cart[$id]);
     }
 
+    public function delete(Request $request, $productId)
+    {
+        $product = Product::find($productId);
+
+        if (!$product) {
+            abort(404);
+        }
+
+        $cart = $request->session()->get('cart');
+
+        if (empty($cart[$productId])) {
+            return response('No such item', 418);
+        }
+
+        if ($cart[$productId]['quantity'] > 1) {
+            $cart[$productId]['quantity']--;
+        } else {
+            unset($cart[$productId]);
+        }
+
+        $request->session()->put('cart', $cart);
+        return response('removed', 200);
+    }
+
     public function update(Request $request)
     {
-        if($request->id) {
+        if ($request->id) {
             if ($request->quantity > 0) {
                 $cart = $request->session()->get('cart');
                 $cart[$request->id]["quantity"] = $request->quantity;
@@ -77,9 +103,9 @@ class CartController extends Controller
 
     public function remove(Request $request)
     {
-        if($request->id) {
+        if ($request->id) {
             $cart = $request->session()->get('cart');
-            if(isset($cart[$request->id])) {
+            if (isset($cart[$request->id])) {
                 unset($cart[$request->id]);
                 $request->session()->put('cart', $cart);
             }

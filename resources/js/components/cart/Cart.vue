@@ -11,21 +11,21 @@
                     >
                 </li>
                 <li v-if="!$auth.check()" @click="showModal">
-                        <svg
-                            width="13"
-                            height="15"
-                            viewBox="0 0 13 15"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                id="Vector"
-                                d="M6.64744 7.95349C4.7307 7.95349 3.1707 6.39349 3.1707 4.47674C3.1707 2.56 4.7307 1 6.64744 1C8.56419 1 10.1242 2.56 10.1242 4.47674C10.1242 6.39349 8.56419 7.95349 6.64744 7.95349ZM6.64744 1.90698C5.96639 1.90857 5.31368 2.17983 4.83211 2.66141C4.35053 3.14299 4.07927 3.79569 4.07767 4.47674C4.07927 5.1578 4.35053 5.8105 4.83211 6.29208C5.31368 6.77366 5.96639 7.04491 6.64744 7.04651C7.3285 7.04491 7.9812 6.77366 8.46278 6.29208C8.94436 5.8105 9.21561 5.1578 9.21721 4.47674C9.21561 3.79569 8.94436 3.14299 8.46278 2.66141C7.9812 2.17983 7.3285 1.90857 6.64744 1.90698ZM11.8414 14C11.5935 14 11.3879 13.7944 11.3879 13.5465C11.3879 11.4605 9.25953 9.76744 6.64744 9.76744C4.03535 9.76744 1.90698 11.4605 1.90698 13.5465C1.90698 13.7944 1.7014 14 1.45349 14C1.20558 14 1 13.7944 1 13.5465C1 10.9647 3.53349 8.86047 6.64744 8.86047C9.7614 8.86047 12.2949 10.9647 12.2949 13.5465C12.2949 13.7944 12.0893 14 11.8414 14Z"
-                                fill="currentColor"
-                                stroke="currentColor"
-                                stroke-width="0.5"
-                            />
-                        </svg>
+                    <svg
+                        width="13"
+                        height="15"
+                        viewBox="0 0 13 15"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            id="Vector"
+                            d="M6.64744 7.95349C4.7307 7.95349 3.1707 6.39349 3.1707 4.47674C3.1707 2.56 4.7307 1 6.64744 1C8.56419 1 10.1242 2.56 10.1242 4.47674C10.1242 6.39349 8.56419 7.95349 6.64744 7.95349ZM6.64744 1.90698C5.96639 1.90857 5.31368 2.17983 4.83211 2.66141C4.35053 3.14299 4.07927 3.79569 4.07767 4.47674C4.07927 5.1578 4.35053 5.8105 4.83211 6.29208C5.31368 6.77366 5.96639 7.04491 6.64744 7.04651C7.3285 7.04491 7.9812 6.77366 8.46278 6.29208C8.94436 5.8105 9.21561 5.1578 9.21721 4.47674C9.21561 3.79569 8.94436 3.14299 8.46278 2.66141C7.9812 2.17983 7.3285 1.90857 6.64744 1.90698ZM11.8414 14C11.5935 14 11.3879 13.7944 11.3879 13.5465C11.3879 11.4605 9.25953 9.76744 6.64744 9.76744C4.03535 9.76744 1.90698 11.4605 1.90698 13.5465C1.90698 13.7944 1.7014 14 1.45349 14C1.20558 14 1 13.7944 1 13.5465C1 10.9647 3.53349 8.86047 6.64744 8.86047C9.7614 8.86047 12.2949 10.9647 12.2949 13.5465C12.2949 13.7944 12.0893 14 11.8414 14Z"
+                            fill="currentColor"
+                            stroke="currentColor"
+                            stroke-width="0.5"
+                        />
+                    </svg>
                 </li>
                 <li>
                     <a
@@ -54,7 +54,7 @@
                                 fill="currentColor"
                             />
                         </svg>
-                        <span>{{ cartQty }}</span>
+                        <span>{{ cartQty || "" }}</span>
                     </a>
                 </li>
             </ul>
@@ -75,6 +75,7 @@ export default {
     },
     mounted() {
         this.$store.dispatch("cart");
+        window.piu = this.removeProduct;
     },
     data() {
         return {
@@ -99,7 +100,47 @@ export default {
                     this.$store.getters.currencyMultiplier
             ).toFixed(2);
         },
+        removeProduct() {
+            return (productId) => {
+                this.$store.dispatch("removeFromCart", productId);
+            };
+        },
         content() {
+            if (!this.cartQty) {
+                return ``;
+            }
+            let items = "";
+            _.forEach(this.$store.getters.cartItems, (item) => {
+                if (!item) return;
+                const qty = item.quantity > 1 ? ` (${item.quantity})` : "";
+                items += `
+                    <div class="item">
+                      <img src="images/product.png" alt="product image" />
+                    <div class="product-name">${item.name}</div>
+                    <div class="product-price">$${item.price}${qty}</div>
+                    <div class="product-remove" onclick="piu(${item.id})">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11" fill="none">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M9.38547 10.4729C9.58073 10.6682 9.89731 10.6682 10.0926 10.4729C10.2878 10.2777 10.2878 9.9611 10.0926 9.76584L5.82664 5.49991L10.0926 1.23398C10.2878 1.03872 10.2878 0.722136 10.0926 0.526874C9.89731 0.331611 9.58073 0.331611 9.38547 0.526874L5.11954 4.7928L0.853554 0.526818C0.658292 0.331555 0.34171 0.331556 0.146448 0.526818C-0.0488146 0.72208 -0.0488151 1.03866 0.146448 1.23392L4.41243 5.49991L0.146447 9.76589C-0.0488158 9.96116 -0.0488154 10.2777 0.146447 10.473C0.341709 10.6683 0.658291 10.6683 0.853554 10.473L5.11954 6.20702L9.38547 10.4729Z" fill="currentColor" />
+                        </svg>
+                      </div>
+                    </div>
+              `;
+            });
+            return `
+            <div class="cart">
+                <div class="items">${items}</div>
+              <div class="footer">
+                <div>Total</div>
+                <div class="amount">
+                    <div class="value">$${this.amount}</div>
+                  <div class="tax-label">Vat may apply</div>
+                </div>
+              </div>
+              <div class="action">
+                <button type="button" class="yellow-button" onclick="window.location.replace('/checkout')">Go to cart</button>
+              </div>
+            </div>
+            `;
             if (!this.cartQty) {
                 return `
                   <div class="px-6 bg-white border shadow rounded-lg">
@@ -126,15 +167,6 @@ export default {
                 </a>
               </div>
             `;
-            let items = "";
-            _.forEach(this.$store.getters.cartItems, (item) => {
-                if (!item) return;
-                items += `<tr>
-                <td class="border px-4 py-2">${item.name}</td>
-                <td class="border px-4 py-2">${item.quantity}</td>
-                <td class="border px-4 py-2">${this.price(item)}</td>
-              </tr>`;
-            });
             return start + items + end + amount;
         },
     },
@@ -187,7 +219,7 @@ header nav ul.personal-menu {
     margin-right: 12px;
 }
 
-header .cart::before {
+.cart::before {
     border-left: 15px solid transparent;
     border-bottom: 15px solid #504d5b;
     content: "";
@@ -196,17 +228,17 @@ header .cart::before {
     right: 20px;
 }
 
-header .cart {
+.cart {
     position: absolute;
-    right: 24px;
     width: 310px;
     border-radius: 10px;
     background: #504d5b;
-    top: 60px;
+    top: 0;
+    right: -24px;
     padding-bottom: 30px;
 }
 
-header .cart .footer {
+.cart .footer {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -222,25 +254,25 @@ header .cart .footer {
     border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-header .cart .items {
+.cart .items {
     margin-bottom: 8px;
     max-height: 235px;
     overflow-y: auto;
     padding: 20px 35px 0;
 }
 
-header .cart .items .item {
+.cart .items .item {
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 78px;
 }
 
-header .cart .items .item img {
+.cart .items .item img {
     width: 78px;
 }
 
-header .cart .items .item .product-name {
+.cart .items .item .product-name {
     color: #fff;
     font-family: Montserrat;
     font-size: 11px;
@@ -250,7 +282,7 @@ header .cart .items .item .product-name {
     width: 100px;
 }
 
-header .cart .items .item .product-price {
+.cart .items .item .product-price {
     color: #fff;
     text-align: right;
     font-family: Montserrat;
@@ -259,23 +291,24 @@ header .cart .items .item .product-price {
     font-weight: 600;
     line-height: normal;
     margin-right: 14px;
+    width: 60px;
 }
 
-header .cart .items .item .product-remove {
+.cart .items .item .product-remove {
     cursor: pointer;
     color: #ffffff4d;
 }
 
-header .cart .items .item .product-remove:hover svg {
+.cart .items .item .product-remove:hover svg {
     color: #fff;
 }
 
-header .cart .footer .amount {
+.cart .footer .amount {
     text-align: right;
     color: #ffbd19;
 }
 
-header .cart .footer .amount .tax-label {
+.cart .footer .amount .tax-label {
     color: rgba(255, 255, 255, 0.3);
     text-align: center;
     font-family: Montserrat;
@@ -285,12 +318,12 @@ header .cart .footer .amount .tax-label {
     line-height: 150%; /* 12px */
 }
 
-header .cart .action {
+.cart .action {
     text-align: center;
     margin-top: 10px;
 }
 
-header .cart .action .yellow-button {
+.cart .action .yellow-button {
     font-family: Montserrat;
     color: #fff;
     text-align: center;
@@ -306,7 +339,7 @@ header .cart .action .yellow-button {
     background: linear-gradient(0deg, #ffbd19 0%, #ffbd19 100%), #ff8a00;
 }
 
-header .cart .action .yellow-button:hover {
+.cart .action .yellow-button:hover {
     background-color: #ff8a00;
 }
 </style>
