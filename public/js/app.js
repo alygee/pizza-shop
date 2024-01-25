@@ -3562,22 +3562,44 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      products: {},
-      cart: {},
-      showModal: false,
-      selectedProduct: {}
+      activeCategory: "all",
+      categories: [{
+        value: "all",
+        name: "All Tools"
+      }, {
+        value: "transitions",
+        name: "Transitions"
+      }, {
+        value: "luts",
+        name: "Luts"
+      }, {
+        value: "light-leaks",
+        name: "Light Leaks"
+      }],
+      products: []
     };
   },
   created: function created() {
     this.fetchData();
   },
-  mounted: function mounted() {},
+  computed: {
+    activeProducts: function activeProducts() {
+      var _this = this;
+      if (this.activeCategory === "all") {
+        return this.products;
+      }
+      return this.products.filter(function (_ref) {
+        var category = _ref.category;
+        return category === _this.activeCategory;
+      });
+    }
+  },
   methods: {
     fetchData: function fetchData() {
-      var _this = this;
-      this.axios.get("/api/products").then(function (_ref) {
-        var data = _ref.data;
-        _this.products = data;
+      var _this2 = this;
+      this.axios.get("/api/products").then(function (_ref2) {
+        var data = _ref2.data;
+        _this2.products = data;
       });
     }
   }
@@ -4564,9 +4586,29 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("div", {
     staticClass: "catalog"
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
+  }, [_c("div", {
+    staticClass: "categories"
+  }, _vm._l(_vm.categories, function (_ref) {
+    var name = _ref.name,
+      value = _ref.value;
+    return _c("button", {
+      key: value,
+      staticClass: "gray-button",
+      "class": {
+        active: value === _vm.activeCategory
+      },
+      attrs: {
+        type: "button"
+      },
+      on: {
+        click: function click($event) {
+          _vm.activeCategory = value;
+        }
+      }
+    }, [_vm._v("\n            " + _vm._s(name) + "\n        ")]);
+  }), 0), _vm._v(" "), _c("div", {
     staticClass: "products"
-  }, _vm._l(_vm.products, function (product) {
+  }, _vm._l(_vm.activeProducts, function (product) {
     return _c("ProductItem", {
       key: product.id,
       attrs: {
@@ -4575,33 +4617,7 @@ var render = function render() {
     });
   }), 1)]);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "categories"
-  }, [_c("button", {
-    staticClass: "gray-button",
-    attrs: {
-      type: "button"
-    }
-  }, [_vm._v("ALL TOOLS")]), _vm._v(" "), _c("button", {
-    staticClass: "gray-button",
-    attrs: {
-      type: "button"
-    }
-  }, [_vm._v("TRANSITIONS")]), _vm._v(" "), _c("button", {
-    staticClass: "gray-button active",
-    attrs: {
-      type: "button"
-    }
-  }, [_vm._v("\n            LIGHT LEAKS\n        ")]), _vm._v(" "), _c("button", {
-    staticClass: "gray-button",
-    attrs: {
-      type: "button"
-    }
-  }, [_vm._v("LUTS")])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 

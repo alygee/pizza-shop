@@ -30,27 +30,6 @@ class ProductsSeeder extends Seeder
            'category' => 'transitions',
         ],
         [
-           'name' => 'Luts Duotone',
-           'description' => 'DaVinci Resolve: 17.2 or higher, Resolution: Responsive, FPS: Any, Items: 25 lut files, License: Lifetime',
-           'image' => '/storage/uploads/images/product.png',
-           'price' => 30,
-           'category' => 'transitions',
-        ],
-        [
-           'name' => 'Luts Hollywood',
-           'description' => 'DaVinci Resolve: 17.2 or higher, Resolution: Responsive, FPS: Any, Items: 75 lut files, License: Lifetime',
-           'image' => '/storage/uploads/images/product.png',
-           'price' => 30,
-           'category' => 'transitions',
-        ],
-        [
-           'name' => 'Luts Cinematic',
-           'description' => 'DaVinci Resolve: 17.2 or higher, Resolution: Responsive, FPS: Any, Items: 142 lut files, License: Lifetime',
-           'image' => '/storage/uploads/images/product.png',
-           'price' => 30,
-           'category' => 'transitions',
-        ],
-        [
            'name' => 'Flip Transitions',
            'description' => 'DaVinci Resolve: 17.2 or higher, Resolution: Responsive, FPS: Any, Items: 9 transitions, License: Lifetime',
            'image' => '/storage/uploads/images/product.png',
@@ -58,11 +37,32 @@ class ProductsSeeder extends Seeder
            'category' => 'transitions',
         ],
         [
+           'name' => 'Luts Duotone',
+           'description' => 'DaVinci Resolve: 17.2 or higher, Resolution: Responsive, FPS: Any, Items: 25 lut files, License: Lifetime',
+           'image' => '/storage/uploads/images/product.png',
+           'price' => 30,
+           'category' => 'luts',
+        ],
+        [
+           'name' => 'Luts Hollywood',
+           'description' => 'DaVinci Resolve: 17.2 or higher, Resolution: Responsive, FPS: Any, Items: 75 lut files, License: Lifetime',
+           'image' => '/storage/uploads/images/product.png',
+           'price' => 30,
+           'category' => 'luts',
+        ],
+        [
+           'name' => 'Luts Cinematic',
+           'description' => 'DaVinci Resolve: 17.2 or higher, Resolution: Responsive, FPS: Any, Items: 142 lut files, License: Lifetime',
+           'image' => '/storage/uploads/images/product.png',
+           'price' => 30,
+           'category' => 'luts',
+        ],
+        [
            'name' => 'Light Leaks Pack',
            'description' => 'DaVinci Resolve: 17.2 or higher, Resolution: Responsive, FPS: Any, Items: 476 .mp4 files, License: Lifetime',
            'image' => '/storage/uploads/images/product.png',
            'price' => 59,
-           'category' => 'transitions',
+           'category' => 'light-leaks',
         ],
     ];
 

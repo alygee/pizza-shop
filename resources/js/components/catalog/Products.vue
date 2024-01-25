@@ -1,16 +1,20 @@
 <template>
     <div class="catalog">
         <div class="categories">
-            <button class="gray-button" type="button">ALL TOOLS</button>
-            <button class="gray-button" type="button">TRANSITIONS</button>
-            <button class="gray-button active" type="button">
-                LIGHT LEAKS
+            <button
+                v-for="{ name, value } in categories"
+                :key="value"
+                class="gray-button"
+                :class="{ active: value === activeCategory }"
+                type="button"
+                @click="activeCategory = value"
+            >
+                {{ name }}
             </button>
-            <button class="gray-button" type="button">LUTS</button>
         </div>
         <div class="products">
             <ProductItem
-                v-for="product in products"
+                v-for="product in activeProducts"
                 :product="product"
                 :key="product.id"
             />
@@ -26,16 +30,42 @@ export default {
     components: { ProductItem },
     data() {
         return {
-            products: {},
-            cart: {},
-            showModal: false,
-            selectedProduct: {},
+            activeCategory: "all",
+            categories: [
+                {
+                    value: "all",
+                    name: "All Tools",
+                },
+                {
+                    value: "transitions",
+                    name: "Transitions",
+                },
+                {
+                    value: "luts",
+                    name: "Luts",
+                },
+                {
+                    value: "light-leaks",
+                    name: "Light Leaks",
+                },
+            ],
+            products: [],
         };
     },
     created() {
         this.fetchData();
     },
-    mounted() {},
+    computed: {
+        activeProducts() {
+            if (this.activeCategory === "all") {
+                return this.products;
+            }
+
+            return this.products.filter(
+                ({ category }) => category === this.activeCategory
+            );
+        },
+    },
     methods: {
         fetchData() {
             this.axios.get("/api/products").then(({ data }) => {
